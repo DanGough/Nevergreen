@@ -29,4 +29,31 @@ Then from within the Nevergreen folder, run the following command to temporarily
 ```powershell
 Import-Module .\Nevergreen\Nevergreen.psd1
 ```
-You can also copy it to one of the folders listed under '$env:PSModulePath' to make it available in all future sessions without having to import it.
+You can also copy it to one of the folders listed under `$env:PSModulePath` to make it available in all future sessions without having to import it.
+
+## Usage
+
+List all supported apps:
+```powershell
+Find-NevergreenApp
+```
+
+List all Adobe and Microsoft apps (accepts arrays and uses a RegEx match):
+```powershell
+Find-NevergreenApp -Name Adobe,Microsoft
+```
+
+Get version and download links for Microsoft Power BI Desktop (all platforms):
+```powershell
+Get-NevergreenApp -Name MicrosoftPowerBIDesktop'
+```
+
+Get version and download links for Microsoft Power BI Desktop (64-bit only):
+```powershell
+Get-NevergreenApp -Name MicrosoftPowerBIDesktop | Where-Object {$_.Architecture -eq 'x64'}
+```
+
+Combine both commands to get all results!
+```powershell
+Find-NevergreenApp | Get-NevergreenApp
+```
