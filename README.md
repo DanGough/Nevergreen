@@ -38,20 +38,24 @@ List all supported apps:
 Find-NevergreenApp
 ```
 
+
 List all Adobe and Microsoft apps (accepts arrays and uses a RegEx match):
 ```powershell
 Find-NevergreenApp -Name Adobe,Microsoft
 ```
 
+
 Get version and download links for Microsoft Power BI Desktop (all platforms):
 ```powershell
-Get-NevergreenApp -Name MicrosoftPowerBIDesktop'
+Get-NevergreenApp -Name MicrosoftPowerBIDesktop
 ```
+
 
 Get version and download links for Microsoft Power BI Desktop (64-bit only):
 ```powershell
 Get-NevergreenApp -Name MicrosoftPowerBIDesktop | Where-Object {$_.Architecture -eq 'x64'}
 ```
+
 
 Combine both commands to get all results!
 ```powershell
