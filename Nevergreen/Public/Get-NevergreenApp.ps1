@@ -1,4 +1,28 @@
 function Get-NevergreenApp {
+    <#
+    .SYNOPSIS
+        Attempts to retrieve the latest version and download link for the selected application.
+
+    .DESCRIPTION
+        The application name must be a valid supported name - use Find-Nevergreen app to list supported applications. The output of this command may retrieve multiple results, filter using Where-Object and Select-Object where appropriate.
+
+    .NOTES
+        Site: https://packageology.com
+        Author: Dan Gough
+        Twitter: @packageologist
+
+    .LINK
+        https://github.com/DanGough/Nevergreen
+
+    .PARAMETER Name
+        The application name to return details for. Must be an exact match for a supported application name.
+
+    .EXAMPLE
+        Get-NevergreenApp -Name MicrosoftPowerBIDesktop
+
+        Description:
+        Returns the latest version and download links for all available platforms.
+    #>
     [OutputType([System.Management.Automation.PSObject])]
     [CmdletBinding(SupportsShouldProcess = $False)]
     param (
@@ -13,11 +37,12 @@ function Get-NevergreenApp {
     )
 
     begin {
+        $AppDir = [System.IO.Path]::Combine((Split-Path -Path $PSScriptRoot -Parent), 'Apps')
     }
 
     process {
         foreach ($AppName in $Name) {
-            $Script = [System.IO.Path]::Combine($PSScriptRoot, 'Apps', "Get-$AppName.ps1")
+            $Script = [System.IO.Path]::Combine($AppDir, "Get-$AppName.ps1")
             if (Test-Path -LiteralPath $Script -PathType Leaf) {
                 try {
                     $Output = &$Script
