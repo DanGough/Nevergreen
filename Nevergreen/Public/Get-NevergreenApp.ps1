@@ -22,6 +22,18 @@ function Get-NevergreenApp {
 
         Description:
         Returns the latest version and download links for all available platforms.
+
+    .EXAMPLE
+        Get-NevergreenApp -Name MicrosoftPowerBIDesktop | Where-Object {$_.Architecture -eq 'x64'}
+
+        Description:
+        Returns the latest version and download links for the 64-bit version only.
+
+    .EXAMPLE
+        Find-NevergreenApp | Get-NevergreenApp
+
+        Description:
+        List results for all apps!
     #>
     [OutputType([System.Management.Automation.PSObject])]
     [CmdletBinding(SupportsShouldProcess = $False)]
