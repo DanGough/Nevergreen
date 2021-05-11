@@ -13,7 +13,7 @@ This has been tested with Powershell 5.1 and 7.1.3. Other versions may work but 
 ## Installation
 
 ### Powershell Gallery
-Simply install directly from the Powershell Gallery by running the following command:
+Simply install directly from the [Powershell Gallery](https://www.powershellgallery.com/packages/Nevergreen) by running the following command:
 ```powershell
 Install-Module -Name Nevergreen
 ```
