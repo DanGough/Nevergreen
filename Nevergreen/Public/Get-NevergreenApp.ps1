@@ -50,6 +50,7 @@ function Get-NevergreenApp {
 
     begin {
         $AppDir = [System.IO.Path]::Combine((Split-Path -Path $PSScriptRoot -Parent), 'Apps')
+        $ProgressPreference = 'SilentlyContinue'
     }
 
     process {

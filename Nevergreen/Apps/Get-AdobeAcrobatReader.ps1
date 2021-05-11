@@ -1,5 +1,3 @@
-$ProgressPreference = 'SilentlyContinue'
-
 $DownloadPageURL = 'https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/' + ((Invoke-WebRequest -Uri 'https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/index.html' -UseBasicParsing).Links | Where-Object title -EQ 'next chapter' | Select-Object -First 1 -ExpandProperty href)
 $DownloadPage = Invoke-WebRequest -Uri $DownloadPageURL -UseBasicParsing
 $Version = ($DownloadPage.Content | Select-String -Pattern '<title>(\d+\.\d+\.\w+)\s').Matches.Groups[1].Value
