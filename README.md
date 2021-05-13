@@ -35,7 +35,6 @@ If you have a request to add an application to Nevergreen, please abide by the f
 
 - If it is not, you are welcome to add a request via the [Issues](https://github.com/DanGough/Nevergreen/issues) tab. Please include any helpful information such as the URLs for the download page and release notes if possible.
 <br>
-<br>
 
 ## Supported Powershell Versions
 <br>
@@ -45,7 +44,6 @@ This has been tested with Powershell 5.1 and 7.1.3, and the module manifests lis
 <br>
 
 ## Installation
-<br>
 
 ### Powershell Gallery
 <br>
