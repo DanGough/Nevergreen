@@ -4,32 +4,26 @@
 <br>
 Nevergreen is a Powershell module that returns the latest version and download links for various Windows applications.
 <br>
-<br>
 
 It can be used as an alternative to the excellent [Evergreen](https://github.com/aaronparker/Evergreen) module, for apps that project does not support, or where it might not return the results you want.
-<br>
 <br>
 
 Evergreen relies on API queries to obtain its data, and HTML scraping is not welcome. This is the reason Nevergreen was born, a place to accept all the Evergreen rejects! Please note this method is inherently more prone to breaking when websites are changed, hence the name!
 <br>
 <br>
-<br>
 
 ## Bugs
 <br>
-Because these apps rely on HTML scraping, they are prone to breakage when the websites are changed. If you encounter an issue, please file a report under the Issues tab.
-<br>
+Because these apps rely on HTML scraping, they are prone to breakage when the websites are changed. If you encounter an issue, please file a report under the [Issues](https://github.com/DanGough/Nevergreen/issues) tab.
 <br>
 
 Fix contributions are also welcomed - fork the repository, create the fix in a new branch in your copy, then create a pull request for me to review. If you're not familiar with Git, just post the fixed code directly within the issue.
-<br>
 <br>
 <br>
 
 ## Requests
 <br>
 If you have a request to add an application to Nevergreen, please abide by the following:
-<br>
 <br>
 
 - If the app has a queryable API feed to obtain the latest version, it is better suited for inclusion in [Evergreen](https://github.com/aaronparker/Evergreen). It can be hard to find these API feeds, but if for example the app in question is hosted on Github, Evergreen has built-in functions for getting those apps easily.
@@ -39,12 +33,10 @@ If you have a request to add an application to Nevergreen, please abide by the f
 - If it is not, you are welcome to add a request via the [Issues](https://github.com/DanGough/Nevergreen/issues) tab. Please include any helpful information such as the URLs for the download page and release notes if possible.
 <br>
 <br>
-<br>
 
 ## Supported Powershell Versions
 <br>
 This has been tested with Powershell 5.1 and 7.1.3, and the module manifests lists the minimum supported version as 5.1. It may work on 3.0, but it has never been tested.
-<br>
 <br>
 <br>
 
