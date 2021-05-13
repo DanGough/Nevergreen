@@ -34,9 +34,9 @@ If you have a request to add an application to Nevergreen, please abide by the f
 
 - If the app has a queryable API feed to obtain the latest version, it is better suited for inclusion in [Evergreen](https://github.com/aaronparker/Evergreen). It can be hard to find these API feeds, but if for example the app in question is hosted on Github, Evergreen has built-in functions for getting those apps easily.
 
-- Please check the New Apps area under the Projects tab to see if the app is already on the to-do list.
+- Please check the [New Apps](https://github.com/DanGough/Nevergreen/projects/1) area under the [Projects](https://github.com/DanGough/Nevergreen/projects) tab to see if the app is already on the to-do list.
 
-- If it is not, you are welcome to add a request via the Issues tab. Please include any helpful information such as the URLs for the download page and release notes if possible.
+- If it is not, you are welcome to add a request via the [Issues](https://github.com/DanGough/Nevergreen/issues) tab. Please include any helpful information such as the URLs for the download page and release notes if possible.
 <br>
 <br>
 <br>
@@ -71,7 +71,7 @@ Update-Module -Name Nevergreen
 ### Manual Installation
 <br>
 
-Download the latest Main branch, either by downloading the zip file directly from Github, or by installing Git and typing:
+Download the latest Main branch, either by downloading the zip file directly from Github, or by installing [Git](https://git-scm.com/downloads) and typing:
 <br>
 
 ```
