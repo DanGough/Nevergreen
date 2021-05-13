@@ -2,6 +2,7 @@
 
 ## About
 <br>
+
 Nevergreen is a Powershell module that returns the latest version and download links for various Windows applications.
 <br>
 
@@ -14,6 +15,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 
 ## Bugs
 <br>
+
 Because these apps rely on HTML scraping, they are prone to breakage when the websites are changed. If you encounter an issue, please file a report under the [Issues](https://github.com/DanGough/Nevergreen/issues) tab.
 <br>
 
@@ -23,6 +25,7 @@ Fix contributions are also welcomed - fork the repository, create the fix in a n
 
 ## Requests
 <br>
+
 If you have a request to add an application to Nevergreen, please abide by the following:
 <br>
 
@@ -36,6 +39,7 @@ If you have a request to add an application to Nevergreen, please abide by the f
 
 ## Supported Powershell Versions
 <br>
+
 This has been tested with Powershell 5.1 and 7.1.3, and the module manifests lists the minimum supported version as 5.1. It may work on 3.0, but it has never been tested.
 <br>
 <br>
@@ -85,7 +89,6 @@ Import-Module .\Nevergreen\Nevergreen.psd1
 <br>
 
 You can also copy it to one of the folders listed under `$env:PSModulePath` to make it available in all future sessions without having to import it.
-<br>
 <br>
 <br>
 
