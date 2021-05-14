@@ -1,25 +1,25 @@
-$Resp = Invoke-WebRequest -Uri 'https://www.qgis.org/en/site/forusers/download.html' -UseBasicParsing
+$Response = Invoke-WebRequest -Uri 'https://www.qgis.org/en/site/forusers/download.html' -UseBasicParsing
 
-$UrlLatest = $Resp.Links | Where-Object href -Like '*.msi' | Select-Object -First 1 -ExpandProperty href
-$VersionLatest = ($UrlLatest | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
+$URL64 = $Response.Links | Where-Object href -Like '*.msi' | Select-Object -First 1 -ExpandProperty href
+$Version = ($URL64 | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
 
-$UrlLtr = $Resp.Links | Where-Object href -Like '*.msi' | Select-Object -First 1 -Skip 1 -ExpandProperty href
-$VersionLtr = ($UrlLtr | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
+$URL64LTR = $Response.Links | Where-Object href -Like '*.msi' | Select-Object -First 1 -Skip 1 -ExpandProperty href
+$VersionLTR = ($URL64LTR | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
 
-if ($VersionLatest -and $UrlLatest) {
+if ($Version -and $URL64) {
     [PSCustomObject]@{
-        Version      = $VersionLatest
+        Version      = $Version
         Architecture = 'x64'
         Channel      = 'Latest'
-        URI          = $UrlLatest
+        URI          = $URL64
     }
 }
 
-if ($VersionLtr -and $UrlLtr) {
+if ($VersionLTR -and $URL64LTR) {
     [PSCustomObject]@{
-        Version      = $VersionLtr
+        Version      = $VersionLTR
         Architecture = 'x64'
         Channel      = 'LTR'
-        URI          = $UrlLtr
+        URI          = $URL64LTR
     }
 }

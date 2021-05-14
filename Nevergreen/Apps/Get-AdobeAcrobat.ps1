@@ -6,8 +6,8 @@ if ($Version -match '\D$') {
     $Version = ($DownloadPage.Content | Select-String -Pattern 'win\s\((\d+\.\d+\.\d+)\)').Matches.Groups[1].Value
 }
 
-$URL64 = ($DownloadPage.Links | Where-Object href -like '*AcrobatDCx64Upd*.msp')[0].href
-$URL32 = ($DownloadPage.Links | Where-Object href -like '*AcrobatDCUpd*.msp')[0].href
+$URL64 = ($DownloadPage.Links | Where-Object href -Like '*AcrobatDCx64Upd*.msp')[0].href
+$URL32 = ($DownloadPage.Links | Where-Object href -Like '*AcrobatDCUpd*.msp')[0].href
 
 if ($Version -and $URL64) {
     [PSCustomObject]@{
