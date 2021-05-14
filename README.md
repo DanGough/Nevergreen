@@ -119,6 +119,8 @@ Get-NevergreenApp -Name MicrosoftPowerBIDesktop | Where-Object {$_.Architecture 
 
 Combine both commands to get all results!
 ```powershell
-Find-NevergreenApp | Get-NevergreenApp
+Find-NevergreenApp | ForEach-Object {"`n$_`:"; Get-NevergreenApp $_ | Format-Table}
 ```
+
+
 <br>
