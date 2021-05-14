@@ -1,11 +1,11 @@
-$Resp = Invoke-WebRequest -Uri 'https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html' -UseBasicParsing
+$Response = Invoke-WebRequest -Uri 'https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html' -UseBasicParsing
 
-$Version = ($Resp.Content | Select-String -Pattern 'latest\srelease\s\((.+)\)').Matches.Groups[1].Value
+$Version = ($Response.Content | Select-String -Pattern 'latest\srelease\s\(((?:\d+\.)+(?:\d+))\)').Matches.Groups[1].Value
 
-$URL64 = $Resp.Links | Where-Object href -Like '*putty-64bit*.msi' | Select-Object -First 1 -ExpandProperty href
-$URL32 = $Resp.Links | Where-Object href -Like '*w32/putty*.msi' | Select-Object -First 1 -ExpandProperty href
-$URLARM64 = $Resp.Links | Where-Object href -Like '*putty-arm64*.msi' | Select-Object -First 1 -ExpandProperty href
-$URLARM32 = $Resp.Links | Where-Object href -Like '*putty-arm32*.msi' | Select-Object -First 1 -ExpandProperty href
+$URL64 = $Response.Links | Where-Object href -Like '*putty-64bit*.msi' | Select-Object -First 1 -ExpandProperty href
+$URL32 = $Response.Links | Where-Object href -Like '*w32/putty*.msi' | Select-Object -First 1 -ExpandProperty href
+$URLARM64 = $Response.Links | Where-Object href -Like '*putty-arm64*.msi' | Select-Object -First 1 -ExpandProperty href
+$URLARM32 = $Response.Links | Where-Object href -Like '*putty-arm32*.msi' | Select-Object -First 1 -ExpandProperty href
 
 if ($Version -and $URL64) {
     [PSCustomObject]@{
