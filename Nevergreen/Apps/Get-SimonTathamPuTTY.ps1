@@ -2,24 +2,24 @@ $Resp = Invoke-WebRequest -Uri 'https://www.chiark.greenend.org.uk/~sgtatham/put
 
 $Version = ($Resp.Content | Select-String -Pattern 'latest\srelease\s\((.+)\)').Matches.Groups[1].Value
 
-$URLx64 = $Resp.Links | Where-Object href -Like '*putty-64bit*.msi' | Select-Object -First 1 -ExpandProperty href
-$URLx86 = $Resp.Links | Where-Object href -Like '*w32/putty*.msi' | Select-Object -First 1 -ExpandProperty href
+$URL64 = $Resp.Links | Where-Object href -Like '*putty-64bit*.msi' | Select-Object -First 1 -ExpandProperty href
+$URL32 = $Resp.Links | Where-Object href -Like '*w32/putty*.msi' | Select-Object -First 1 -ExpandProperty href
 $URLARM64 = $Resp.Links | Where-Object href -Like '*putty-arm64*.msi' | Select-Object -First 1 -ExpandProperty href
 $URLARM32 = $Resp.Links | Where-Object href -Like '*putty-arm32*.msi' | Select-Object -First 1 -ExpandProperty href
 
-if ($Version -and $URLx64) {
+if ($Version -and $URL64) {
     [PSCustomObject]@{
         Version      = $Version
         Architecture = 'x64'
-        URI          = $URLx64
+        URI          = $URL64
     }
 }
 
-if ($Version -and $URLx86) {
+if ($Version -and $URL32) {
     [PSCustomObject]@{
         Version      = $Version
         Architecture = 'x86'
-        URI          = $URLx64
+        URI          = $URL32
     }
 }
 
