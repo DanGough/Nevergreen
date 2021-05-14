@@ -13,6 +13,16 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 <br>
 <br>
 
+## Supported apps
+<br>
+
+The best place to keep up see which apps are supported in the latest release to check the [Apps folder in the main branch](https://github.com/DanGough/Nevergreen/tree/main/Nevergreen/Apps).
+<br>
+
+Also, you can check the [latest commits to the Apps folder in the dev branch](https://github.com/DanGough/Nevergreen/commits/dev/Nevergreen/Apps) to see what's being worked on.
+<br>
+<br>
+
 ## Bugs
 <br>
 
