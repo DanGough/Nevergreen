@@ -16,7 +16,27 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 ## Supported apps
 <br>
 
-The best place to keep up see which apps are supported in the latest release to check the [Apps folder in the main branch](https://github.com/DanGough/Nevergreen/tree/main/Nevergreen/Apps).
+- Adobe Acrobat Reader / Pro
+  - MSP update patches only
+  - Recently Evergreen was not showing the latest version nor any 64-bit patches. Both issues have since been resolved, if that implementation proves to be reliable, these apps may be deprecated here.
+- Advanced IP Scanner
+- Advanced Port Scanner
+- Cisco Webex
+- IGEL Universal Management Suite
+- Microsoft Azure CLI
+- Microsoft Azure Information Protection UL Client
+- Microsoft Power BI Desktop
+- Microsoft Power BI Report Builder
+- Microsoft Remote Desktop (for WVD)
+- Microsoft SSMS
+  - This is already in Evergreen but has a known issue against it where the feed is providing the build version rather than the release version most know it by.
+- Mimecast for Outlook
+- QGIS
+- Radio Detection CAT Manager
+- Simon Tatham PuTTY
+<br>
+
+The [Apps folder in the main branch](https://github.com/DanGough/Nevergreen/tree/main/Nevergreen/Apps) will always show the apps supported in the latest release.
 <br>
 
 Also, you can check the [latest commits to the Apps folder in the dev branch](https://github.com/DanGough/Nevergreen/commits/dev/Nevergreen/Apps) to see what's being worked on.
