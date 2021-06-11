@@ -1,78 +1,55 @@
-Function Get-RedirectedUrl
-{
-    <#
-    .LINK
-        https://powershellmagazine.com/2013/01/29/pstip-retrieve-a-redirected-url
-    #>
-    Param
-    (
-        [Parameter(Mandatory = $true)]
-        [String]$url
-    )
-    $request = [System.Net.WebRequest]::Create($url)
-    $request.AllowAutoRedirect = $true
-    Try
-    {
-        $response = $request.GetResponse()
-        $response.ResponseUri.AbsoluteUri
-        $response.Close()
-    }
-    Catch
-    {
-        "ERROR: $_"
-    }
+
+
+$URL32Exe = (Resolve-Uri -Uri 'https://zoom.us/client/latest/ZoomInstallerFull.exe').Uri
+$Version32Exe = ($URL32Exe | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+
+$URL64Exe = (Resolve-Uri -Uri 'https://zoom.us/client/latest/ZoomInstaller.exe?archType=x64').Uri
+$Version64Exe = ($URL64Exe | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+
+$URL32Msi = (Resolve-Uri -Uri 'http://zoom.us/client/latest/ZoomInstallerFull.msi').Uri
+$Version32Msi = ($URL32Msi | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+
+$URL64Msi = (Resolve-Uri -Uri 'http://zoom.us/client/latest/ZoomInstallerFull.msi?archType=x64').Uri
+$Version64Msi = ($URL64Msi | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+
+$URLOutlook = (Resolve-Uri -Uri 'http://zoom.us/client/latest/ZoomOutlookPluginSetup.msi').Uri
+$VersionOutlook = ($URLOutlook | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+
+$URLNotes = (Resolve-Uri -Uri 'https://zoom.us/client/latest/ZoomNotesPluginSetup.msi').Uri
+$VersionNotes = ($URLNotes | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+
+$URLNotesAdmin = (Resolve-Uri -Uri 'https://zoom.us/client/latest/ZoomNotesPluginAdminTool.msi').Uri
+$VersionNotesAdmin = ($URLNotesAdmin | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+
+$URLSkype = (Resolve-Uri -Uri 'http://zoom.us/client/latest/ZoomLyncPluginSetup.msi').Uri
+$VersionSkype = ($URLSkype | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+
+$URLRoomsExe = (Resolve-Uri -Uri 'http://zoom.us/client/latest/ZoomRooms.exe').Uri
+$VersionRoomsExe = ($URLRoomsExe | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+
+$URLRoomsMsi = (Resolve-Uri -Uri 'https://zoom.us/client/latest/ZoomRoomsInstaller.msi').Uri
+$VersionRoomsMsi = ($URLRoomsMsi | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+
+$VDIDownloadURL = ((Invoke-WebRequest -Uri 'https://support.zoom.us/hc/en-us/sections/360011509631-VDI-Downloads').Links | Where-Object href -match 'VDI-Release-Version' | Select-Object -ExpandProperty href -First 1)
+if ($VDIDownloadURL -notlike 'https://support.zoom.us*') {
+    $VDIDownloadURL = 'https://support.zoom.us' + $VDIDownloadURL
 }
+$VDILinks = (Invoke-WebRequest -Uri $VDIDownloadURL -UseBasicParsing).Links
 
-$URL32Exe = Get-RedirectedUrl -URL 'https://zoom.us/client/latest/ZoomInstallerFull.exe'
-$Version32Exe = ($URL32Exe | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
+$URLVDI = $VDILinks | Where-Object href -like '*ZoomInstallerVDI.msi' | Select-Object -ExpandProperty href -First 1
+$VersionVDI = ($URLVDI | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
 
-$URL64Exe = Get-RedirectedUrl -URL 'https://zoom.us/client/latest/ZoomInstaller.exe?archType=x64'
-$Version64Exe = ($URL64Exe | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
+$URLCitrix = $VDILinks | Where-Object href -like '*ZoomCitrixHDXMediaPlugin.msi' | Select-Object -ExpandProperty href -First 1
+$VersionCitrix = ($VDILinks | Where-Object href -like '*ZoomCitrixHDXMediaPlugin.msi' | Select-Object -ExpandProperty outerHTML -First 1 | Select-String -Pattern '>((?:\d+\.)+\d+)<').Matches.Groups[1].Value
 
-$URL32Msi = Get-RedirectedUrl -URL 'http://zoom.us/client/latest/ZoomInstallerFull.msi'
-$Version32Msi = ($URL32Msi | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
+$URLVMware = $VDILinks | Where-Object href -like '*ZoomVmwareMediaPlugin.msi' | Select-Object -ExpandProperty href -First 1
+$VersionVMware = ($VDILinks | Where-Object href -like '*ZoomVmwareMediaPlugin.msi' | Select-Object -ExpandProperty outerHTML -First 1 | Select-String -Pattern '>((?:\d+\.)+\d+)<').Matches.Groups[1].Value
 
-$URL64Msi = Get-RedirectedUrl -URL 'http://zoom.us/client/latest/ZoomInstallerFull.msi?archType=x64'
-$Version64Msi = ($URL64Msi | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
+$URLWVD = $VDILinks | Where-Object href -like '*ZoomWVDMediaPlugin.msi' | Select-Object -ExpandProperty href -First 1
+$VersionWVD = ($VDILinks | Where-Object href -like '*ZoomWVDMediaPlugin.msi' | Select-Object -ExpandProperty outerHTML -First 1 | Select-String -Pattern '>((?:\d+\.)+\d+)<').Matches.Groups[1].Value
 
-$URLOutlook = Get-RedirectedUrl -URL 'http://zoom.us/client/latest/ZoomOutlookPluginSetup.msi'
-$VersionOutlook = ($URLOutlook | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
-
-$URLNotes = Get-RedirectedUrl -URL 'https://zoom.us/client/latest/ZoomNotesPluginSetup.msi'
-$VersionNotes = ($URLNotes | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
-
-$URLNotesAdmin = Get-RedirectedUrl -URL 'https://zoom.us/client/latest/ZoomNotesPluginAdminTool.msi'
-$VersionNotesAdmin = ($URLNotesAdmin | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
-
-$URLSkype = Get-RedirectedUrl -URL 'http://zoom.us/client/latest/ZoomLyncPluginSetup.msi'
-$VersionSkype = ($URLSkype | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
-
-$URLRoomsExe = Get-RedirectedUrl -URL 'http://zoom.us/client/latest/ZoomRooms.exe'
-$VersionRoomsExe = ($URLRoomsExe | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
-
-$URLRoomsMsi = Get-RedirectedUrl -URL 'https://zoom.us/client/latest/ZoomRoomsInstaller.msi'
-$VersionRoomsMsi = ($URLRoomsMsi | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
-
-$DownloadPageURL = 'https://support.zoom.us'+((Invoke-WebRequest -Uri 'https://support.zoom.us/hc/en-us/articles/360041602711' -UseBasicParsing).Content | Select-String -Pattern '(\/hc\/en-us\/articles\/\d+)" target="_self" r').Matches.Groups[1].Value
-$DownloadPage = (Invoke-WebRequest -Uri $DownloadPageURL -UseBasicParsing).Content
-
-$VersionVDI = ((Invoke-WebRequest -Uri 'https://support.zoom.us/hc/en-us/articles/360041602711' -UseBasicParsing).Content | Select-String -Pattern '\(((?:\d+\.)+(?:\d+))\)').Matches.Groups[1].Value
-$URLVDI = 'https://zoom.us/download/vdi/ZoomInstallerVDI.msi'
-
-$VersionCitrix = ($DownloadPage | Select-String -Pattern '(https.+Citrix.+msi).+\>((?:\d+\.)+(?:\d+))\<').Matches.Groups[2].Value
-$URLCitrix = 'https://zoom.us/download/vdi/ZoomCitrixHDXMediaPlugin.msi'
-
-$VersionVMware = ($DownloadPage | Select-String -Pattern '(https.+VMware.+msi).+\>((?:\d+\.)+(?:\d+))\<').Matches.Groups[2].Value
-$URLVMware = 'https://zoom.us/download/vdi/ZoomVmwareMediaPlugin.msi'
-
-$VersionWVD = ($DownloadPage | Select-String -Pattern '(https.+WVD.+msi).+\>((?:\d+\.)+(?:\d+))\<').Matches.Groups[2].Value
-$URLWVD = 'https://zoom.us/download/vdi/ZoomWVDMediaPlugin.msi'
-
-$VersionVDITool = ($DownloadPage | Select-String -Pattern '(https.+VDITool.+exe).+\>((?:\d+\.)+(?:\d+))\<').Matches.Groups[2].Value
-$URLVDITool = 'https://zoom.us/download/vdi/ZoomVDITool.exe'
-
-$VersionUninstaller = '6.5.64722.907'
-$URLUninstaller = 'https://support.zoom.us/hc/en-us/article_attachments/360084068792/CleanZoom.zip'
+$URLVDITool = $VDILinks | Where-Object href -like '*ZoomVDITool.exe' | Select-Object -ExpandProperty href -First 1
+$VersionVDITool = ($VDILinks | Where-Object href -like '*ZoomVDITool.exe' | Select-Object -ExpandProperty outerHTML -First 1 | Select-String -Pattern '>((?:\d+\.)+\d+)<').Matches.Groups[1].Value
 
 if ($Version32Exe -and $URL32Exe)
 {
@@ -179,7 +156,7 @@ if ($VersionVDI -and $URLVDI)
     [PSCustomObject]@{
         Version      = $VersionVDI
         Platform     = 'VDI'
-        Type         = 'Host'
+        Type         = 'Msi'
         URI          = $URLVDI
     }
 }
@@ -189,7 +166,7 @@ if ($VersionCitrix -and $URLCitrix)
     [PSCustomObject]@{
         Version      = $VersionCitrix
         Platform     = 'Citrix'
-        Type         = 'Client'
+        Type         = 'Msi'
         URI          = $URLCitrix
     }
 }
@@ -199,7 +176,7 @@ if ($VersionVMware -and $URLVMware)
     [PSCustomObject]@{
         Version      = $VersionVMware
         Platform     = 'VMware'
-        Type         = 'Client'
+        Type         = 'Msi'
         URI          = $URLVMware
     }
 }
@@ -209,7 +186,7 @@ if ($VersionWVD -and $URLWVD)
     [PSCustomObject]@{
         Version      = $VersionWVD
         Platform     = 'Windows Virtual Desktop'
-        Type         = 'Client'
+        Type         = 'Msi'
         URI          = $URLWVD
     }
 }
@@ -221,15 +198,5 @@ if ($VersionVDITool -and $URLVDITool)
         Platform     = 'VDI Log Tool'
         Type         = 'Exe'
         URI          = $URLVDITool
-    }
-}
-
-if ($VersionUninstaller -and $URLUninstaller)
-{
-    [PSCustomObject]@{
-        Version  = $VersionUninstaller
-        Platform = 'Cleanup Tool'
-        Type     = 'Zip'
-        URI      = $URLUninstaller
     }
 }
