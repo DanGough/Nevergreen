@@ -1,9 +1,8 @@
-$URL32 = [System.Net.HttpWebRequest]::Create('https://cardstudio.zebra.com/download').GetResponse().ResponseUri.AbsoluteUri
-$Version = ($URL32 | Select-String -Pattern 'CardStudio-Setup_((?:\d+\.)+(?:\d+)).exe').Matches.Groups[1].Value
+$URL32 = (Resolve-Uri -Uri 'https://cardstudio.zebra.com/download').Uri
 
-if ($Version -and $URL32) {
+if ($URL32 -match '((?:\d+\.)+\d+)\.exe') {
     [PSCustomObject]@{
-        Version      = $Version
+        Version      = $matches[1]
         Architecture = 'x86'
         URI          = $URL32
     }

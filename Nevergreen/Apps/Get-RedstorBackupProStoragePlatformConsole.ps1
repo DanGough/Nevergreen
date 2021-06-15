@@ -1,10 +1,13 @@
-$DownloadPageURL =  'https://support.redstor.com' + ((Invoke-WebRequest 'https://support.redstor.com/hc/en-gb/sections/200458081-Downloads' -UseBasicParsing).Links | Where-Object href -Like '*Downloads-Redstor-Pro*')[0].href + '#tab2'
-$URL32 = ((Invoke-WebRequest $DownloadPageURL -UseBasicParsing).Links | Where-Object href -Like '*RedstorBackupPro-SP-Console*')[0].href 
-$Version = ($URL32 | Select-String -Pattern 'RedstorBackupPro-SP-Console-((?:\d+\.)+(?:\d+)).exe').Matches.Groups[1].Value
+$DownloadPageURL = (Invoke-WebRequest 'https://support.redstor.com/hc/en-gb/sections/200458081-Downloads' -DisableKeepAlive -UseBasicParsing).Links | Where-Object href -Like '*Downloads-Redstor-Pro*' | Select-Object -ExpandProperty href -First 1
+if ($DownloadPageURL -notmatch '^http') {
+    $DownloadPageURL = 'https://support.redstor.com' + $DownloadPageURL
+}
 
-if ($Version -and $URL32) {
+$URL32 = (Invoke-WebRequest $DownloadPageURL -DisableKeepAlive -UseBasicParsing).Links | Where-Object href -Like '*RedstorBackupPro-SP-Console*' | Select-Object -ExpandProperty href -First 1
+
+if ($URL32 -match '((?:\d+\.)+\d+)\.exe$') {
     [PSCustomObject]@{
-        Version      = $Version
+        Version      = $matches[1]
         Architecture = 'x86'
         URI          = $URL32
     }
