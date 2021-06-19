@@ -16,13 +16,21 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 ## Supported apps
 <br>
 
+- 8x8 Work
+- Adobe Creative Cloud
 - Adobe Acrobat Reader / Pro
   - MSP update patches only
   - Recently Evergreen was not showing the latest version nor any 64-bit patches. Both issues have since been resolved, if that implementation proves to be reliable, these apps may be deprecated here.
 - Advanced IP Scanner
 - Advanced Port Scanner
+- AutoIt
 - Cisco Webex
+- Cisco Webex Support Manager
 - IGEL Universal Management Suite
+- Komodo Labs NEWT Professional
+- Komodo Labs Slitheris
+- Lenovo Commercial Vantage
+- Logitech Camera Setings
 - Microsoft Azure CLI
 - Microsoft Azure Information Protection UL Client
 - Microsoft Power BI Desktop
@@ -30,10 +38,21 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Microsoft Remote Desktop (for WVD)
 - Microsoft SSMS
   - This is already in Evergreen but has a known issue against it where the feed is providing the build version rather than the release version most know it by.
+- Microsoft Teams
+  - This provides all of the beta/dev releases that Evergreen does not.
+- Microsoft Windows ADK
 - Mimecast for Outlook
+- Philippe Jounin Tftpd64
+- Plantronics Hub
 - QGIS
 - Radio Detection CAT Manager
+- Redstor Backup Pro Storage Platform Console
 - Simon Tatham PuTTY
+- Tableau Desktop
+- Tableau Reader
+- Zebra Card Studio
+- Zoom
+
 <br>
 
 The [Apps folder in the main branch](https://github.com/DanGough/Nevergreen/tree/main/Nevergreen/Apps) will always show the apps supported in the latest release.
