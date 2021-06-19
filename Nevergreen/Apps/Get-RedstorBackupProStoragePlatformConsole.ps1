@@ -1,7 +1,6 @@
 $DownloadPageURL = (Invoke-WebRequest 'https://support.redstor.com/hc/en-gb/sections/200458081-Downloads' -DisableKeepAlive -UseBasicParsing).Links | Where-Object href -Like '*Downloads-Redstor-Pro*' | Select-Object -ExpandProperty href -First 1
-if ($DownloadPageURL -notmatch '^http') {
-    $DownloadPageURL = 'https://support.redstor.com' + $DownloadPageURL
-}
+
+$DownloadPageURL = Set-UriPrefix -Uri $DownloadPageURL -Prefix 'https://support.redstor.com'
 
 $URL32 = (Invoke-WebRequest $DownloadPageURL -DisableKeepAlive -UseBasicParsing).Links | Where-Object href -Like '*RedstorBackupPro-SP-Console*' | Select-Object -ExpandProperty href -First 1
 

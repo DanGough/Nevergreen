@@ -4,9 +4,7 @@ $URL32 = $Response.Links | Where-Object href -Like '*autoit-v*-setup.exe' | Sele
 
 if ($URL32) {
 
-    if ($URL32 -notmatch '^http') {
-        $URL32 = 'https://www.autoitscript.com' + $URL32
-    }
+    $URL32 = Set-UriPrefix -Uri $URL32 -Prefix 'https://www.autoitscript.com'
 
     if ($Response.Content -match 'v((?:\d+\.)+\d+)') {
         [PSCustomObject]@{

@@ -4,9 +4,7 @@ $Version = ($Response.Content | Select-String -Pattern 'Version ((?:\d+\.)+\d+)'
 
 if ($Version -and $URL32) {
 
-    if ($URL32 -notmatch '^http') {
-        $URL32 = 'https://www.poly.com' + $URL32
-    }
+    $URL32 = Set-UriPrefix -Uri $URL32 -Prefix 'https://www.poly.com'
 
     [PSCustomObject]@{
         Version      = $Version

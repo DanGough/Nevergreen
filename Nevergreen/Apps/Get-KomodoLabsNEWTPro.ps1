@@ -3,9 +3,7 @@ $URL32 = $Response.Links | Where-Object href -Like '*newtpro.exe' | Select-Objec
 
 if ($URL32) {
 
-    if ($URL32 -notmatch '^http') {
-        $URL32 = 'https://www.komodolabs.com' + $URL32
-    }
+    $URL32 = Set-UriPrefix -Uri $URL32 -Prefix 'https://www.komodolabs.com'
 
     if ($URL32 -and $Response.Content -match 'NEWT Professional v((?:\d+\.)+\d+)') {
         [PSCustomObject]@{

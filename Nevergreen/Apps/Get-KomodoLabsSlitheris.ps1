@@ -3,9 +3,7 @@ $URL32 = $Response.Links | Where-Object href -Like '*slitheris_installer.exe' | 
 
 if ($URL32) {
 
-    if ($URL32 -notmatch '^http') {
-        $URL32 = 'https://www.komodolabs.com' + $URL32
-    }
+    $URL32 = Set-UriPrefix -Uri $URL32 -Prefix 'https://www.komodolabs.com'
 
     if ($Response.Content -match 'Slitheris Network Discovery v((?:\d+\.)+\d+)') {
         [PSCustomObject]@{
