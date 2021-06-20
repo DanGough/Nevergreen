@@ -5,18 +5,5 @@ $URL64 = ($Response.Links | Where-Object class -EQ 'cta-btn')[1].href.Replace('&
 
 $Version = $Response.Content | Get-Version -Pattern 'Build\s((?:\d+\.)+\d+)<'
 
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
-
-if ($Version -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x64'
-        URI          = $URL64
-    }
-}
+New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86'
+New-NevergreenApp -Version $Version -Uri $URL64 -Architecture 'x64'

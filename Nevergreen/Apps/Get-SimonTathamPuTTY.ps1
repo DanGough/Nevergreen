@@ -1,35 +1,8 @@
 $Version = (Invoke-WebRequest -Uri 'https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html' -DisableKeepAlive -UseBasicParsing).Content | Get-Version -Pattern 'latest\srelease\s\(((?:\d+\.)+\d+)\)'
 
-$URL64,$URL32,$URLARM64,$URLARM32 = Get-Link -Uri 'https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html' -MatchProperty href -Pattern 'putty-64bit.+\.msi','putty-\d+\.\d+.+\.msi','putty-arm64.+\.msi','putty-arm32.+\.msi'
+$URL32,$URL64,$URLARM32,$URLARM64 = Get-Link -Uri 'https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html' -MatchProperty href -Pattern 'putty-\d+\.\d+.+\.msi','putty-64bit.+\.msi','putty-arm32.+\.msi','putty-arm64.+\.msi'
 
-if ($Version -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x64'
-        URI          = $URL64
-    }
-}
-
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
-
-if ($Version -and $URLARM64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'ARM64'
-        URI          = $URLARM64
-    }
-}
-
-if ($Version -and $URLARM32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'ARM32'
-        URI          = $URLARM32
-    }
-}
+New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86'
+New-NevergreenApp -Version $Version -Uri $URL64 -Architecture 'x64'
+New-NevergreenApp -Version $Version -Uri $URLARM32 -Architecture 'ARM32'
+New-NevergreenApp -Version $Version -Uri $URLARM64 -Architecture 'ARM64'

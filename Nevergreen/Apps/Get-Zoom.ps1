@@ -46,152 +46,21 @@ $VersionWVD = $VDILinks | Where-Object href -like '*ZoomWVDMediaPlugin.msi' | Se
 $URLVDITool = $VDILinks | Where-Object href -like '*ZoomVDITool.exe' | Select-Object -ExpandProperty href -First 1
 $VersionVDITool = $VDILinks | Where-Object href -like '*ZoomVDITool.exe' | Select-Object -ExpandProperty outerHTML -First 1 | Get-Version -Pattern '>((?:\d+\.)+\d+)<'
 
-if ($Version32Exe -and $URL32Exe)
-{
-    [PSCustomObject]@{
-        Version  = $Version32Exe
-        Platform = 'x86'
-        Type     = 'Exe'
-        URI      = $URL32Exe
-    }
-}
+New-NevergreenApp -Version $Version32Exe -Uri $URL32Exe -Architecture 'x86' -Type 'Exe' -Platform 'Desktop'
+New-NevergreenApp -Version $Version64Exe -Uri $URL64Exe -Architecture 'x64' -Type 'Exe' -Platform 'Desktop'
+New-NevergreenApp -Version $Version32Msi -Uri $URL32Msi -Architecture 'x86' -Type 'MSI' -Platform 'Desktop'
+New-NevergreenApp -Version $Version64Msi -Uri $URL64Msi -Architecture 'x64' -Type 'MSI' -Platform 'Desktop'
 
-if ($Version64Exe -and $URL64Exe)
-{
-    [PSCustomObject]@{
-        Version  = $Version64Exe
-        Platform = 'x64'
-        Type     = 'Exe'
-        URI      = $URL64Exe
-    }
-}
+New-NevergreenApp -Version $VersionOutlook -Uri $URLOutlook -Architecture 'x86' -Type 'MSI' -Platform 'Outlook'
+New-NevergreenApp -Version $VersionNotes -Uri $URLNotes -Architecture 'x86' -Type 'MSI' -Platform 'Notes'
+New-NevergreenApp -Version $VersionNotesAdmin -Uri $URLNotesAdmin -Architecture 'x86' -Type 'MSI' -Platform 'Notes Admin Tool'
+New-NevergreenApp -Version $VersionSkype -Uri $URLSkype -Architecture 'x86' -Type 'MSI' -Platform 'Skype'
 
-if ($Version32Msi -and $URL32Msi)
-{
-    [PSCustomObject]@{
-        Version  = $Version32Msi
-        Platform = 'x86'
-        Type     = 'Msi'
-        URI      = $URL32Msi
-    }
-}
+New-NevergreenApp -Version $VersionRoomsExe -Uri $URLRoomsExe -Architecture 'x86' -Type 'Exe' -Platform 'Rooms'
+New-NevergreenApp -Version $VersionRoomsMsi -Uri $URLRoomsMsi -Architecture 'x86' -Type 'Msi' -Platform 'Rooms'
 
-if ($Version64Msi -and $URL64Msi)
-{
-    [PSCustomObject]@{
-        Version  = $Version64Msi
-        Platform = 'x64'
-        Type     = 'Msi'
-        URI      = $URL64Msi
-    }
-}
-
-if ($VersionOutlook -and $URLOutlook)
-{
-    [PSCustomObject]@{
-        Version  = $VersionOutlook
-        Platform = 'Outlook'
-        Type     = 'Msi'
-        URI      = $URLOutlook
-    }
-}
-
-if ($VersionNotes -and $URLNotes)
-{
-    [PSCustomObject]@{
-        Version  = $VersionNotes
-        Platform = 'Notes'
-        Type     = 'Msi'
-        URI      = $URLNotes
-    }
-}
-
-if ($VersionNotesAdmin -and $URLNotesAdmin)
-{
-    [PSCustomObject]@{
-        Version  = $VersionNotesAdmin
-        Platform = 'Notes Admin Tool'
-        Type     = 'Msi'
-        URI      = $URLNotesAdmin
-    }
-}
-
-if ($VersionSkype -and $URLSkype)
-{
-    [PSCustomObject]@{
-        Version  = $VersionSkype
-        Platform = 'Skype'
-        Type     = 'Msi'
-        URI      = $URLSkype
-    }
-}
-
-if ($VersionRoomsExe -and $URLRoomsExe)
-{
-    [PSCustomObject]@{
-        Version  = $VersionRoomsExe
-        Platform = 'Rooms'
-        Type     = 'Exe'
-        URI      = $URLRoomsExe
-    }
-}
-
-if ($VersionRoomsMsi -and $URLRoomsMsi)
-{
-    [PSCustomObject]@{
-        Version  = $VersionRoomsMsi
-        Platform = 'Rooms'
-        Type     = 'Msi'
-        URI      = $URLRoomsMsi
-    }
-}
-
-if ($VersionVDI -and $URLVDI)
-{
-    [PSCustomObject]@{
-        Version      = $VersionVDI
-        Platform     = 'VDI'
-        Type         = 'Msi'
-        URI          = $URLVDI
-    }
-}
-
-if ($VersionCitrix -and $URLCitrix)
-{
-    [PSCustomObject]@{
-        Version      = $VersionCitrix
-        Platform     = 'Citrix'
-        Type         = 'Msi'
-        URI          = $URLCitrix
-    }
-}
-
-if ($VersionVMware -and $URLVMware)
-{
-    [PSCustomObject]@{
-        Version      = $VersionVMware
-        Platform     = 'VMware'
-        Type         = 'Msi'
-        URI          = $URLVMware
-    }
-}
-
-if ($VersionWVD -and $URLWVD)
-{
-    [PSCustomObject]@{
-        Version      = $VersionWVD
-        Platform     = 'Windows Virtual Desktop'
-        Type         = 'Msi'
-        URI          = $URLWVD
-    }
-}
-
-if ($VersionVDITool -and $URLVDITool)
-{
-    [PSCustomObject]@{
-        Version      = $VersionVDITool
-        Platform     = 'VDI Log Tool'
-        Type         = 'Exe'
-        URI          = $URLVDITool
-    }
-}
+New-NevergreenApp -Version $VersionVDI -Uri $URLVDI -Architecture 'x86' -Type 'Msi' -Platform 'VDI'
+New-NevergreenApp -Version $VersionCitrix -Uri $URLCitrix -Architecture 'x86' -Type 'Msi' -Platform 'Citrix'
+New-NevergreenApp -Version $VersionVMware -Uri $URLVMware -Architecture 'x86' -Type 'Msi' -Platform 'VMware'
+New-NevergreenApp -Version $VersionWVD -Uri $URLWVD -Architecture 'x86' -Type 'Msi' -Platform 'WVD'
+New-NevergreenApp -Version $VersionVDITool -Uri $URLVDITool -Architecture 'x86' -Type 'Exe' -Platform 'VDI Log Tool'

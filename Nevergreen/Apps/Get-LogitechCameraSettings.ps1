@@ -3,10 +3,4 @@ $DownloadPageURL = ((Invoke-RestMethod -Uri 'https://support.logi.com/api/v2/hel
 $URL32 = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'LogiCameraSettings.+\.exe'
 $Version = $URL32 | Get-Version
 
-if ($URL32 -and $Version) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
+New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86'

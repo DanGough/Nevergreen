@@ -10,22 +10,7 @@ if ($Version -match 'x$') {
     $Version = Get-Version -String $DownloadPage.Content -Pattern 'win\s\(((?:\d+\.)+\d+)\)'
 }
 
-$URL64,$URL32 = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'AcrobatDCx64Upd\d+\.msp','AcrobatDCUpd\d+\.msp'
+$URL32,$URL64 = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'AcrobatDCUpd\d+\.msp','AcrobatDCx64Upd\d+\.msp'
 
-if ($Version -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x64'
-        Language     = 'Neutral'
-        URI          = $URL64
-    }
-}
-
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        Language     = 'Neutral'
-        URI          = $URL32
-    }
-}
+New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86' -Language 'Neutral'
+New-NevergreenApp -Version $Version -Uri $URL64 -Architecture 'x64' -Language 'Neutral'

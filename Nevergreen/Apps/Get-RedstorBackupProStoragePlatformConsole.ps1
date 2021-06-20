@@ -4,10 +4,4 @@ $URL32 = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'RedstorBac
 
 $Version = $URL32 | Get-Version -Pattern '((?:\d+\.)+\d+)\.exe$'
 
-if ($URL32 -and $Version) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
+New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86'

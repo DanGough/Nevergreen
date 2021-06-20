@@ -10,31 +10,8 @@ if ($Version -match 'x$') {
     $Version = Get-Version -String $DownloadPage.Content -Pattern 'win\s\(((?:\d+\.)+\d+)\)'
 }
 
-$URL64,$URL32,$URL32MUI = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'AcroRdrDCx64Upd\d+\.msp','AcroRdrDCUpd\d+\.msp','AcroRdrDCUpd\d+_MUI\.msp'
+$URL32,$URL64,$URL32MUI = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'AcroRdrDCUpd\d+\.msp','AcroRdrDCx64Upd\d+\.msp','AcroRdrDCUpd\d+_MUI\.msp'
 
-if ($Version -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x64'
-        Language     = 'Neutral'
-        URI          = $URL64
-    }
-}
-
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        Language     = 'Neutral'
-        URI          = $URL32
-    }
-}
-
-if ($Version -and $URL32MUI) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        Language     = 'Multi'
-        URI          = $URL32MUI
-    }
-}
+New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86' -Language 'Neutral'
+New-NevergreenApp -Version $Version -Uri $URL64 -Architecture 'x64' -Language 'Neutral'
+New-NevergreenApp -Version $Version -Uri $URL32MUI -Architecture 'x86' -Language 'Multi'
