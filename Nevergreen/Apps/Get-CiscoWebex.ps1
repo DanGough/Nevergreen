@@ -1,6 +1,6 @@
-$Version = ((Invoke-WebRequest 'https://help.webex.com/en-us/mqkve8/Webex-Release-Notes' -UseBasicParsing).Content | Select-String -Pattern 'Version:\s((?:\d+\.)+(?:\d+))</p>').Matches.Groups[1].Value
-$URL32 = (Invoke-WebRequest 'https://help.webex.com/en-us/nw5p67g/Webex-Installation-and-Automatic-Upgrade' -UseBasicParsing).Links | Where-Object href -Like '*Webex_x86.msi' | Select-Object -First 1 -ExpandProperty href
-$URL64 = (Invoke-WebRequest 'https://help.webex.com/en-us/nw5p67g/Webex-Installation-and-Automatic-Upgrade' -UseBasicParsing).Links | Where-Object href -Like '*Webex.msi' | Select-Object -First 1 -ExpandProperty href
+$Version = (Invoke-WebRequest 'https://help.webex.com/en-us/mqkve8/Webex-Release-Notes' -UseBasicParsing).Content | Get-Version -Pattern 'Version:\s((?:\d+\.)+(?:\d+))</p>'
+
+$URL32,$URL64 = Get-Link -Uri 'https://help.webex.com/en-us/nw5p67g/Webex-Installation-and-Automatic-Upgrade' -MatchProperty href -Pattern 'Webex_x86\.msi','Webex\.msi'
 
 if ($Version -and $URL32) {
     [PSCustomObject]@{

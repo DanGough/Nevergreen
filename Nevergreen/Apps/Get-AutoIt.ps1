@@ -1,16 +1,11 @@
-$Response = Invoke-WebRequest 'https://www.autoitscript.com/site/autoit/downloads' -DisableKeepAlive -UseBasicParsing
+$Version = (Invoke-WebRequest 'https://www.autoitscript.com/site/autoit/downloads' -DisableKeepAlive -UseBasicParsing).Content | Get-Version -Pattern 'v((?:\d+\.)+\d+)'
 
-$URL32 = $Response.Links | Where-Object href -Like '*autoit-v*-setup.exe' | Select-Object -ExpandProperty href -First 1
+$URL32 = Get-Link -Uri 'https://www.autoitscript.com/site/autoit/downloads' -MatchProperty href -Pattern 'autoit-v.+-setup\.exe' | Set-UriPrefix -Prefix 'https://www.autoitscript.com'
 
-if ($URL32) {
-
-    $URL32 = Set-UriPrefix -Uri $URL32 -Prefix 'https://www.autoitscript.com'
-
-    if ($Response.Content -match 'v((?:\d+\.)+\d+)') {
-        [PSCustomObject]@{
-            Version      = $matches[1]
-            Architecture = 'x86'
-            URI          = $URL32
-        }
+if ($Version -and $URL32) {
+    [PSCustomObject]@{
+        Version      = $Version
+        Architecture = 'x86'
+        URI          = $URL32
     }
 }

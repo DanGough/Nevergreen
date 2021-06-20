@@ -1,15 +1,11 @@
-$Response = Invoke-WebRequest 'https://www.komodolabs.com/product-downloads' -DisableKeepAlive -UseBasicParsing
-$URL32 = $Response.Links | Where-Object href -Like '*newtpro.exe' | Select-Object -ExpandProperty href -First 1
+$Version = (Invoke-WebRequest 'https://www.komodolabs.com/product-downloads' -DisableKeepAlive -UseBasicParsing).Content | Get-Version -Pattern 'NEWT Professional v((?:\d+\.)+\d+)'
 
-if ($URL32) {
+$URL32 = Get-Link -Uri 'https://www.komodolabs.com/product-downloads' -MatchProperty href -Pattern 'newtpro\.exe$' | Set-UriPrefix -Prefix 'https://www.komodolabs.com'
 
-    $URL32 = Set-UriPrefix -Uri $URL32 -Prefix 'https://www.komodolabs.com'
-
-    if ($URL32 -and $Response.Content -match 'NEWT Professional v((?:\d+\.)+\d+)') {
-        [PSCustomObject]@{
-            Version      = $matches[1]
-            Architecture = 'x86'
-            URI          = $URL32
-        }
+if ($Version -and $URL32) {
+    [PSCustomObject]@{
+        Version      = $Version
+        Architecture = 'x86'
+        URI          = $URL32
     }
 }

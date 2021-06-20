@@ -38,11 +38,11 @@ function Resolve-Uri {
             ValueFromPipelineByPropertyName)]
         [ValidatePattern('^(http|https)://')]
         [Alias('Url')]
-        [System.String[]] $Uri,
+        [String[]] $Uri,
         [Parameter(
             Mandatory = $false,
             Position = 1)]
-        [System.String] $UserAgent
+        [String] $UserAgent
     )
 
     begin {

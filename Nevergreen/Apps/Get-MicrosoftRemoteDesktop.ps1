@@ -2,7 +2,7 @@ $URL64 = 'https://go.microsoft.com/fwlink/?linkid=2068602'
 $URL32 = 'https://go.microsoft.com/fwlink/?linkid=2098960'
 $URLARM64 = 'https://go.microsoft.com/fwlink/?linkid=2098961'
 
-$Version = ((Invoke-WebRequest $URL64 -Method HEAD -UseBasicParsing).Headers.'Content-Disposition' | Select-String -Pattern '_((?:\d+\.)+(?:\d+))_(?:.+)\.msi$').Matches.Groups[1].Value
+$Version = (Resolve-Uri -Uri $URL64).FileName | Get-Version
 
 if ($Version) {
     [PSCustomObject]@{

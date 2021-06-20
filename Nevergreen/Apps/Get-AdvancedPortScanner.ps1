@@ -1,5 +1,5 @@
-$URL32 = 'https://www.advanced-port-scanner.com' + ((Invoke-WebRequest 'https://www.advanced-port-scanner.com' -UseBasicParsing).Links | Where-Object href -Like '*Advanced_Port_Scanner*.exe')[0].href
-$Version = ($URL32 | Select-String -Pattern '.+Advanced_Port_Scanner_((?:\d+\.)+(?:\d+)).exe').Matches.Groups[1].Value
+$URL32 = Get-Link -Uri 'https://www.advanced-port-scanner.com' -MatchProperty href -Pattern 'Advanced_Port_Scanner.+\.exe'
+$Version = $URL32 | Get-Version
 
 if ($Version -and $URL32) {
     [PSCustomObject]@{

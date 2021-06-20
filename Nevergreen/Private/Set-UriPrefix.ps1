@@ -39,18 +39,16 @@ function Set-UriPrefix {
         [Parameter(
             Mandatory = $true,
             Position = 1)]
-        [ValidateNotNullOrEmpty()]
+        [ValidatePattern('^(http|https)://')]
         [System.String] $Prefix
     )
 
-    if ($Uri -like "$Prefix*") {
+    if ($Uri -like '^http') {
         # Nothing to do, return input
         $Uri
     }
     else {
-        # Strip off any existing domain
-        $Suffix = $Uri -replace 'https?://[^/]+',''
         # Output joined strings
-        @($Prefix.TrimEnd('/'), $Suffix.TrimStart('/')) -join '/'
+        $Prefix.TrimEnd('/') + "/" + $Uri.TrimStart('/')
     }
 }

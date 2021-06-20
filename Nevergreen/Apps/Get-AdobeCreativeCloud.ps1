@@ -1,12 +1,5 @@
-
-$URL64 = (Invoke-WebRequest -Uri 'https://helpx.adobe.com/ca/download-install/kb/creative-cloud-desktop-app-download.html' -UseBasicParsing).Links | Where-Object href -Like '*win64*' | Select-Object -ExpandProperty href -First 1
-$Version64 = ($URL64 | Select-String -Pattern 'ACCCx((?:\d+_)+\d+)\.zip$').Matches.Groups[1].Value.Replace("_", ".")
-
-$URL32 = (Invoke-WebRequest -Uri 'https://helpx.adobe.com/ca/download-install/kb/creative-cloud-desktop-app-download.html' -UseBasicParsing).Links | Where-Object href -Like '*win32*' | Select-Object -ExpandProperty href -First 1
-$Version32 = ($URL32 | Select-String -Pattern 'ACCCx((?:\d+_)+\d+)\.zip$').Matches.Groups[1].Value.Replace("_", ".")
-
-$URLARM64 = (Invoke-WebRequest -Uri 'https://helpx.adobe.com/ca/download-install/kb/creative-cloud-desktop-app-download.html' -UseBasicParsing).Links | Where-Object href -Like '*winarm64*' | Select-Object -ExpandProperty href -First 1
-$VersionARM64 = ($URLARM64 | Select-String -Pattern 'ACCCx((?:\d+_)+\d+)\.zip$').Matches.Groups[1].Value.Replace("_", ".")
+$URL64,$URL32,$URLARM64 = Get-Link -Uri 'https://helpx.adobe.com/ca/download-install/kb/creative-cloud-desktop-app-download.html' -MatchProperty href -Pattern 'win64','win32','winarm64'
+$Version64,$Version32,$VersionARM64 = $URL64,$URL32,$URLARM64 | Get-Version -Pattern 'ACCCx((?:\d+_)+\d+)\.zip$' -ReplaceWithDot
 
 if ($Version64 -and $URL64) {
     [PSCustomObject]@{

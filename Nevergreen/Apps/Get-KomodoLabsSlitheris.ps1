@@ -1,15 +1,11 @@
-$Response = Invoke-WebRequest 'https://www.komodolabs.com/product-downloads' -DisableKeepAlive -UseBasicParsing
-$URL32 = $Response.Links | Where-Object href -Like '*slitheris_installer.exe' | Select-Object -ExpandProperty href -First 1
+$Version = (Invoke-WebRequest 'https://www.komodolabs.com/product-downloads' -DisableKeepAlive -UseBasicParsing).Content | Get-Version -Pattern 'Slitheris Network Discovery v((?:\d+\.)+\d+)'
 
-if ($URL32) {
+$URL32 = Get-Link -Uri 'https://www.komodolabs.com/product-downloads' -MatchProperty href -Pattern 'slitheris_installer\.exe$' | Set-UriPrefix -Prefix 'https://www.komodolabs.com'
 
-    $URL32 = Set-UriPrefix -Uri $URL32 -Prefix 'https://www.komodolabs.com'
-
-    if ($Response.Content -match 'Slitheris Network Discovery v((?:\d+\.)+\d+)') {
-        [PSCustomObject]@{
-            Version      = $matches[1]
-            Architecture = 'x86'
-            URI          = $URL32
-        }
+if ($Version -and $URL32) {
+    [PSCustomObject]@{
+        Version      = $Version
+        Architecture = 'x86'
+        URI          = $URL32
     }
 }

@@ -1,55 +1,50 @@
-
-
 $URL32Exe = (Resolve-Uri -Uri 'https://zoom.us/client/latest/ZoomInstallerFull.exe').Uri
-$Version32Exe = ($URL32Exe | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+$Version32Exe = $URL32Exe | Get-Version
 
 $URL64Exe = (Resolve-Uri -Uri 'https://zoom.us/client/latest/ZoomInstaller.exe?archType=x64').Uri
-$Version64Exe = ($URL64Exe | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+$Version64Exe = $URL64Exe | Get-Version
 
 $URL32Msi = (Resolve-Uri -Uri 'http://zoom.us/client/latest/ZoomInstallerFull.msi').Uri
-$Version32Msi = ($URL32Msi | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+$Version32Msi = $URL32Msi | Get-Version
 
 $URL64Msi = (Resolve-Uri -Uri 'http://zoom.us/client/latest/ZoomInstallerFull.msi?archType=x64').Uri
-$Version64Msi = ($URL64Msi | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+$Version64Msi = $URL64Msi | Get-Version
 
 $URLOutlook = (Resolve-Uri -Uri 'http://zoom.us/client/latest/ZoomOutlookPluginSetup.msi').Uri
-$VersionOutlook = ($URLOutlook | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+$VersionOutlook = $URLOutlook | Get-Version
 
 $URLNotes = (Resolve-Uri -Uri 'https://zoom.us/client/latest/ZoomNotesPluginSetup.msi').Uri
-$VersionNotes = ($URLNotes | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+$VersionNotes = $URLNotes | Get-Version
 
 $URLNotesAdmin = (Resolve-Uri -Uri 'https://zoom.us/client/latest/ZoomNotesPluginAdminTool.msi').Uri
-$VersionNotesAdmin = ($URLNotesAdmin | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+$VersionNotesAdmin = $URLNotesAdmin | Get-Version
 
 $URLSkype = (Resolve-Uri -Uri 'http://zoom.us/client/latest/ZoomLyncPluginSetup.msi').Uri
-$VersionSkype = ($URLSkype | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+$VersionSkype = $URLSkype | Get-Version
 
 $URLRoomsExe = (Resolve-Uri -Uri 'http://zoom.us/client/latest/ZoomRooms.exe').Uri
-$VersionRoomsExe = ($URLRoomsExe | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+$VersionRoomsExe = $URLRoomsExe | Get-Version
 
 $URLRoomsMsi = (Resolve-Uri -Uri 'https://zoom.us/client/latest/ZoomRoomsInstaller.msi').Uri
-$VersionRoomsMsi = ($URLRoomsMsi | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+$VersionRoomsMsi = $URLRoomsMsi | Get-Version
 
-$VDIDownloadURL = ((Invoke-WebRequest -Uri 'https://support.zoom.us/hc/en-us/sections/360011509631-VDI-Downloads').Links | Where-Object href -match 'VDI-Release-Version' | Select-Object -ExpandProperty href -First 1)
-if ($VDIDownloadURL -notlike 'https://support.zoom.us*') {
-    $VDIDownloadURL = 'https://support.zoom.us' + $VDIDownloadURL
-}
+$VDIDownloadURL = Get-Link -Uri 'https://support.zoom.us/hc/en-us/sections/360011509631-VDI-Downloads' -MatchProperty href -Pattern 'VDI-Release-Version' | Set-UriPrefix -Prefix 'https://support.zoom.us'
 $VDILinks = (Invoke-WebRequest -Uri $VDIDownloadURL -UseBasicParsing).Links
 
 $URLVDI = $VDILinks | Where-Object href -like '*ZoomInstallerVDI.msi' | Select-Object -ExpandProperty href -First 1
-$VersionVDI = ($URLVDI | Select-String -Pattern '((?:\d+\.)+\d+)').Matches.Groups[1].Value
+$VersionVDI = $VDILinks | Where-Object href -like '*ZoomInstallerVDI.msi' | Select-Object -ExpandProperty outerHTML -First 1 | Get-Version -Pattern '((?:\d+\.)+\d+)<'
 
 $URLCitrix = $VDILinks | Where-Object href -like '*ZoomCitrixHDXMediaPlugin.msi' | Select-Object -ExpandProperty href -First 1
-$VersionCitrix = ($VDILinks | Where-Object href -like '*ZoomCitrixHDXMediaPlugin.msi' | Select-Object -ExpandProperty outerHTML -First 1 | Select-String -Pattern '>((?:\d+\.)+\d+)<').Matches.Groups[1].Value
+$VersionCitrix = $VDILinks | Where-Object href -like '*ZoomCitrixHDXMediaPlugin.msi' | Select-Object -ExpandProperty outerHTML -First 1 | Get-Version -Pattern '>((?:\d+\.)+\d+)<'
 
 $URLVMware = $VDILinks | Where-Object href -like '*ZoomVmwareMediaPlugin.msi' | Select-Object -ExpandProperty href -First 1
-$VersionVMware = ($VDILinks | Where-Object href -like '*ZoomVmwareMediaPlugin.msi' | Select-Object -ExpandProperty outerHTML -First 1 | Select-String -Pattern '>((?:\d+\.)+\d+)<').Matches.Groups[1].Value
+$VersionVMware = $VDILinks | Where-Object href -like '*ZoomVmwareMediaPlugin.msi' | Select-Object -ExpandProperty outerHTML -First 1 | Get-Version -Pattern '>((?:\d+\.)+\d+)<'
 
 $URLWVD = $VDILinks | Where-Object href -like '*ZoomWVDMediaPlugin.msi' | Select-Object -ExpandProperty href -First 1
-$VersionWVD = ($VDILinks | Where-Object href -like '*ZoomWVDMediaPlugin.msi' | Select-Object -ExpandProperty outerHTML -First 1 | Select-String -Pattern '>((?:\d+\.)+\d+)<').Matches.Groups[1].Value
+$VersionWVD = $VDILinks | Where-Object href -like '*ZoomWVDMediaPlugin.msi' | Select-Object -ExpandProperty outerHTML -First 1 | Get-Version -Pattern '>((?:\d+\.)+\d+)<'
 
 $URLVDITool = $VDILinks | Where-Object href -like '*ZoomVDITool.exe' | Select-Object -ExpandProperty href -First 1
-$VersionVDITool = ($VDILinks | Where-Object href -like '*ZoomVDITool.exe' | Select-Object -ExpandProperty outerHTML -First 1 | Select-String -Pattern '>((?:\d+\.)+\d+)<').Matches.Groups[1].Value
+$VersionVDITool = $VDILinks | Where-Object href -like '*ZoomVDITool.exe' | Select-Object -ExpandProperty outerHTML -First 1 | Get-Version -Pattern '>((?:\d+\.)+\d+)<'
 
 if ($Version32Exe -and $URL32Exe)
 {
