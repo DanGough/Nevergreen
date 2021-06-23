@@ -33,6 +33,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Logitech Camera Setings
 - Microsoft Azure CLI
 - Microsoft Azure Information Protection UL Client
+- Microsoft OpenJDK
 - Microsoft Power BI Desktop
 - Microsoft Power BI Report Builder
 - Microsoft Remote Desktop (for WVD)
