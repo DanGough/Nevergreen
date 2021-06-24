@@ -12,5 +12,16 @@ if ($Version -match 'x$') {
 
 $URL32,$URL64 = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'AcrobatDCUpd\d+\.msp','AcrobatDCx64Upd\d+\.msp'
 
-New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86' -Language 'Neutral'
-New-NevergreenApp -Version $Version -Uri $URL64 -Architecture 'x64' -Language 'Neutral'
+if ($URL32) {
+    New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86' -Language 'Neutral'
+}
+else {
+    Write-Warning "No URL found for 32-bit Adobe Acrobat patch"
+}
+
+if ($URL64) {
+    New-NevergreenApp -Version $Version -Uri $URL64 -Architecture 'x64' -Language 'Neutral'
+}
+else {
+    Write-Warning "No URL found for 64-bit Adobe Acrobat patch"
+}
