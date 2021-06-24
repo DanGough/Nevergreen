@@ -1,34 +1,29 @@
-$DownloadPageURL = Get-Link -Uri 'https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/index.html' -MatchProperty title -Pattern '^next chapter$' -PrefixParent
+$Platforms = @(
+    @{Architecture = 'x86'; Language = 'Neutral'; Pattern = 'AcroRdrDCUpd\d+\.msp'}
+    @{Architecture = 'x86'; Language = 'Multi'; Pattern = 'AcroRdrDCUpd\d+_MUI\.msp'}
+    @{Architecture = 'x64'; Language = 'Neutral'; Pattern = 'AcroRdrDCx64Upd\d+\.msp'}
+)
 
-$DownloadPage = Invoke-WebRequest -Uri $DownloadPageURL -DisableKeepAlive -UseBasicParsing
+foreach ($Platform in $Platforms) {
 
-$Version = Get-Version -String $DownloadPage.Content -Pattern '<title>((?:\d+\.)+\w+)\s'
+    $ReleaseURL = 'https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/index.html'
+    $SearchCount = 5
 
-if ($Version -match 'x$') {
-    # 21.001.201xx had different versions for Windows and Mac, assuming if this happens again it will follow the same pattern as last time:
-    # "In this release there are different versions of application for win (21.001.200150) and mac (21.001.20149)."
-    $Version = Get-Version -String $DownloadPage.Content -Pattern 'win\s\(((?:\d+\.)+\d+)\)'
-}
+    do {
+        $ReleaseURL = Get-Link -Uri $ReleaseURL -MatchProperty title -Pattern '^next chapter$' -PrefixParent
 
-$URL32,$URL32MUI,$URL64 = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'AcroRdrDCUpd\d+\.msp','AcroRdrDCUpd\d+_MUI\.msp','AcroRdrDCx64Upd\d+\.msp'
+        $URL = Get-Link -Uri $ReleaseURL -MatchProperty href -Pattern $Platform.Pattern
+        if ($URL) {
+            $Version = ($URL | Get-Version -Pattern '/(\d{8,12})/') -replace '(\d{2})(\d{3})(\d+)','$1.$2.$3'
+            New-NevergreenApp -Version $Version -Uri $URL -Architecture $Platform.Architecture -Language $Platform.Language
+            break
+        }
 
-if ($URL32) {
-    New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86' -Language 'Neutral'
-}
-else {
-    Write-Warning "No URL found for 32-bit Adobe Acrobat Reader patch"
-}
+        $SearchCount--
+    } until ($SearchCount -eq 0)
 
-if ($URL32MUI) {
-    New-NevergreenApp -Version $Version -Uri $URL32MUI -Architecture 'x86' -Language 'Multi'
-}
-else {
-    Write-Warning "No URL found for 32-bit MUI Adobe Acrobat Reader patch"
-}
+    if ($SearchCount -eq 0) {
+        Write-Warning "Could not find release for Adobe Acrobat Reader $($Platform.Architecture) $($Platform.Language)"
+    }
 
-if ($URL64) {
-    New-NevergreenApp -Version $Version -Uri $URL64 -Architecture 'x64' -Language 'Neutral'
-}
-else {
-    Write-Warning "No URL found for 64-bit Adobe Acrobat Reader patch"
 }
