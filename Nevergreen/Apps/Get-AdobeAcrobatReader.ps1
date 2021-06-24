@@ -1,7 +1,7 @@
 $Platforms = @(
-    @{Architecture = 'x86'; Language = 'Neutral'; Pattern = 'AcroRdrDCUpd\d+\.msp'}
-    @{Architecture = 'x86'; Language = 'Multi'; Pattern = 'AcroRdrDCUpd\d+_MUI\.msp'}
-    @{Architecture = 'x64'; Language = 'Neutral'; Pattern = 'AcroRdrDCx64Upd\d+\.msp'}
+    @{Architecture = 'x86'; Language = 'Neutral'; Pattern = 'AcroRdrDCUpd\d{8,12}\.msp'}
+    @{Architecture = 'x86'; Language = 'Multi'; Pattern = 'AcroRdrDCUpd\d{8,12}_MUI\.msp'}
+    @{Architecture = 'x64'; Language = 'Neutral'; Pattern = 'AcroRdrDCx64Upd\d{8,12}\.msp'}
 )
 
 foreach ($Platform in $Platforms) {
@@ -14,7 +14,7 @@ foreach ($Platform in $Platforms) {
 
         $URL = Get-Link -Uri $ReleaseURL -MatchProperty href -Pattern $Platform.Pattern
         if ($URL) {
-            $Version = ($URL | Get-Version -Pattern '/(\d{8,12})/') -replace '(\d{2})(\d{3})(\d+)','$1.$2.$3'
+            $Version = ($URL | Get-Version -Pattern '(\d{8,12}).+msp') -replace '(\d{2})(\d{3})(\d+)','$1.$2.$3'
             New-NevergreenApp -Version $Version -Uri $URL -Architecture $Platform.Architecture -Language $Platform.Language
             break
         }
