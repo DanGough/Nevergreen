@@ -55,13 +55,27 @@ function Get-Link {
             Mandatory = $false,
             Position = 3)]
         [ValidateNotNullOrEmpty()]
-        [String] $ReturnProperty = 'href'
+        [String] $ReturnProperty = 'href',
+        [Switch] $PrefixDomain,
+        [Switch] $PrefixParent
     )
 
     $ProgressPreference = 'SilentlyContinue'
     $Response = Invoke-WebRequest -Uri $Uri -DisableKeepAlive -UseBasicParsing
 
     foreach ($CurrentPattern in $Pattern) {
-        $Response.Links | Where-Object $MatchProperty -match $CurrentPattern | Select-Object -First 1 -ExpandProperty $ReturnProperty
+        $Link = $Response.Links | Where-Object $MatchProperty -match $CurrentPattern | Select-Object -First 1 -ExpandProperty $ReturnProperty
+
+        if ($PrefixDomain) {
+            $BaseURL = ($Uri -split '/' | Select-Object -First 3) -join '/'
+            $Link = Set-UriPrefix -Uri $Link -Prefix $BaseURL
+        }
+        elseif ($PrefixParent) {
+            $BaseURL = ($Uri -split '/' | Select-Object -SkipLast 1) -join '/'
+            $Link = Set-UriPrefix -Uri $Link -Prefix $BaseURL
+        }
+
+        $Link
+
     }
 }

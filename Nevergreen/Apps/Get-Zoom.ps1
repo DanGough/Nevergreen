@@ -28,7 +28,7 @@ $VersionRoomsExe = $URLRoomsExe | Get-Version
 $URLRoomsMsi = (Resolve-Uri -Uri 'https://zoom.us/client/latest/ZoomRoomsInstaller.msi').Uri
 $VersionRoomsMsi = $URLRoomsMsi | Get-Version
 
-$VDIDownloadURL = Get-Link -Uri 'https://support.zoom.us/hc/en-us/sections/360011509631-VDI-Downloads' -MatchProperty href -Pattern 'VDI-Release-Version' | Set-UriPrefix -Prefix 'https://support.zoom.us'
+$VDIDownloadURL = Get-Link -Uri 'https://support.zoom.us/hc/en-us/sections/360011509631-VDI-Downloads' -MatchProperty href -Pattern 'VDI-Release-Version' -PrefixDomain
 $VDILinks = (Invoke-WebRequest -Uri $VDIDownloadURL -UseBasicParsing).Links
 
 $URLVDI = $VDILinks | Where-Object href -like '*ZoomInstallerVDI.msi' | Select-Object -ExpandProperty href -First 1
