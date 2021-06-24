@@ -10,8 +10,25 @@ if ($Version -match 'x$') {
     $Version = Get-Version -String $DownloadPage.Content -Pattern 'win\s\(((?:\d+\.)+\d+)\)'
 }
 
-$URL32,$URL64,$URL32MUI = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'AcroRdrDCUpd\d+\.msp','AcroRdrDCx64Upd\d+\.msp','AcroRdrDCUpd\d+_MUI\.msp'
+$URL32,$URL32MUI,$URL64 = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'AcroRdrDCUpd\d+\.msp','AcroRdrDCUpd\d+_MUI\.msp','AcroRdrDCx64Upd\d+\.msp'
 
-New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86' -Language 'Neutral'
-New-NevergreenApp -Version $Version -Uri $URL64 -Architecture 'x64' -Language 'Neutral'
-New-NevergreenApp -Version $Version -Uri $URL32MUI -Architecture 'x86' -Language 'Multi'
+if ($URL32) {
+    New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86' -Language 'Neutral'
+}
+else {
+    Write-Warning "No URL found for 32-bit Adobe Acrobat Reader patch"
+}
+
+if ($URL32MUI) {
+    New-NevergreenApp -Version $Version -Uri $URL32MUI -Architecture 'x86' -Language 'Multi'
+}
+else {
+    Write-Warning "No URL found for 32-bit MUI Adobe Acrobat Reader patch"
+}
+
+if ($URL64) {
+    New-NevergreenApp -Version $Version -Uri $URL64 -Architecture 'x64' -Language 'Neutral'
+}
+else {
+    Write-Warning "No URL found for 64-bit Adobe Acrobat Reader patch"
+}
