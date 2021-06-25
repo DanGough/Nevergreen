@@ -1,7 +1,7 @@
-$Response = Invoke-WebRequest -Uri 'https://www.qgis.org/en/site/forusers/download.html' -UseBasicParsing
+$Response = Invoke-WebRequest -Uri 'https://www.qgis.org/en/site/forusers/download.html' -DisableKeepAlive -UseBasicParsing
 
 $URL64 = $Response.Links | Where-Object href -Like '*.msi' | Select-Object -First 1 -ExpandProperty href
-$Version = $URL64 | Get-Version
+$Version64 = $URL64 | Get-Version
 
 $URL64LTR = $Response.Links | Where-Object href -Like '*.msi' | Select-Object -First 1 -Skip 1 -ExpandProperty href
 $Version64LTR = $URL64LTR | Get-Version

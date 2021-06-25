@@ -1,4 +1,4 @@
-$Version = (Invoke-WebRequest 'https://www.autoitscript.com/site/autoit/downloads' -DisableKeepAlive -UseBasicParsing).Content | Get-Version -Pattern 'v((?:\d+\.)+\d+)'
+$Version = Get-Version -Uri 'https://www.autoitscript.com/site/autoit/downloads' -Pattern 'v((?:\d+\.)+\d+)'
 
 $URL32 = Get-Link -Uri 'https://www.autoitscript.com/site/autoit/downloads' -MatchProperty href -Pattern 'autoit-v.+-setup\.exe' -PrefixDomain
 

@@ -1,10 +1,10 @@
 function Get-Version {
     <#
     .SYNOPSIS
-        Extracts a version number from a string using a chosen or pre-defined match pattern.
+        Extracts a version number from either a string or the content of a web page using a chosen or pre-defined match pattern.
 
     .DESCRIPTION
-        Extracts a version number from a string using a chosen or pre-defined match pattern.
+        Extracts a version number from either a string or the content of a web page using a chosen or pre-defined match pattern.
 
     .NOTES
         Site: https://packageology.com
@@ -16,6 +16,9 @@ function Get-Version {
 
     .PARAMETER String
         The string to process.
+
+    .PARAMETER Uri
+        The Uri to load web content from to process.
 
     .PARAMETER Pattern
         Optional RegEx pattern to use for version matching.
@@ -34,9 +37,15 @@ function Get-Version {
         [Parameter(
             Mandatory = $true,
             Position = 0,
-            ValueFromPipeline)]
+            ValueFromPipeline = $true,
+            ParameterSetName = 'String')]
         [ValidateNotNullOrEmpty()]
         [String[]] $String,
+        [Parameter(
+            Mandatory = $true,
+            ParameterSetName = 'Uri')]
+        [ValidatePattern('^(http|https)://')]
+        [String[]] $Uri,
         [Parameter(
             Mandatory = $false,
             Position = 1)]
@@ -46,6 +55,23 @@ function Get-Version {
     )
 
     begin {
+        if ($PsCmdlet.ParameterSetName -eq 'Uri') {
+
+            $ProgressPreference = 'SilentlyContinue'
+            $String = $Uri.Clone()
+
+            for ($i = 0; $i -lt $Uri.Count; $i++) {
+                try {
+                    $String[$i] = $null
+                    $String[$i] = (Invoke-WebRequest -Uri $Uri[$i] -DisableKeepAlive -UseBasicParsing).Content
+                }
+                catch {
+                    Write-Error "Unable to query URL $($Uri[$i]): $_"
+                    break
+                }
+            }
+
+        }
     }
 
     process {

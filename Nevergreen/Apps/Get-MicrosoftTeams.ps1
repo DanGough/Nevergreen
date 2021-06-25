@@ -1,5 +1,5 @@
 $DownloadURL = 'https://raw.githubusercontent.com/ItzLevvie/MicrosoftTeams-msinternal/master/defconfig'
-$DownloadText = (Invoke-WebRequest -Uri $DownloadURL -UseBasicParsing).Content
+$DownloadText = (Invoke-WebRequest -Uri $DownloadURL -DisableKeepAlive -UseBasicParsing).Content
 
 $Rings = @('Continuous Deployment', 'Exploration', 'Preview', 'Production')
 $Architectures = @('x64', 'x86', 'ARM64')

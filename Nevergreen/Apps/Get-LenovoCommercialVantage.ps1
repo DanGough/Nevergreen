@@ -1,4 +1,4 @@
-$URL32 = ((Invoke-WebRequest 'https://support.lenovo.com/gb/en/solutions/hf003321-lenovo-vantage-for-enterprise' -DisableKeepAlive -UseBasicParsing).Content | Select-String -Pattern '.+(https://.+LenovoCommercialVantage_(?:\d+\.)+\d+.+zip)').Matches.Groups.Value | Select-Object -Last 1
+$URL32 = Get-Version -Uri 'https://support.lenovo.com/gb/en/solutions/hf003321-lenovo-vantage-for-enterprise' -Pattern '.+(https://.+LenovoCommercialVantage_(?:\d+\.)+\d+.+zip)'
 
 $Version = $URL32 | Get-Version
 
