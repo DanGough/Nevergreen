@@ -31,6 +31,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Komodo Labs Slitheris
 - Lenovo Commercial Vantage
 - Logitech Camera Setings
+- Master Packager
 - Microsoft Azure CLI
 - Microsoft Azure Information Protection UL Client
 - Microsoft OpenJDK
@@ -39,6 +40,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Microsoft Remote Desktop (for WVD)
 - Microsoft SSMS
   - This is already in Evergreen but has a known issue against it where the feed is providing the build version rather than the release version most know it by.
+- Microsoft Sysinternals tools
 - Microsoft Teams
   - This provides all of the beta/dev releases that Evergreen does not.
 - Microsoft Windows ADK
@@ -169,7 +171,7 @@ Get-NevergreenApp -Name MicrosoftPowerBIDesktop | Where-Object {$_.Architecture 
 
 Combine both commands to get all results!
 ```powershell
-Find-NevergreenApp | ForEach-Object {"`n$_`:"; Get-NevergreenApp $_ | Format-Table}
+Find-NevergreenApp | Get-NevergreenApp
 ```
 
 
