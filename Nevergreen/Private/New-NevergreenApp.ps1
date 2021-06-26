@@ -14,6 +14,9 @@ function New-NevergreenApp {
     .LINK
         https://github.com/DanGough/Nevergreen
 
+    .PARAMETER Name
+        The name of the application.
+
     .PARAMETER Uri
         The download URI for the application.
 
