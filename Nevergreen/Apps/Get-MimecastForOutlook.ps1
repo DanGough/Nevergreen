@@ -5,5 +5,5 @@ $URL64 = ($Response.Links | Where-Object class -EQ 'cta-btn')[1].href.Replace('&
 
 $Version = $Response.Content | Get-Version -Pattern 'Build\s((?:\d+\.)+\d+)<'
 
-New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86'
-New-NevergreenApp -Version $Version -Uri $URL64 -Architecture 'x64'
+New-NevergreenApp -Name 'Mimecast for Outlook' -Version $Version -Uri $URL32 -Architecture 'x86'
+New-NevergreenApp -Name 'Mimecast for Outlook' -Version $Version -Uri $URL64 -Architecture 'x64'

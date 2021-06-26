@@ -49,6 +49,10 @@ function New-NevergreenApp {
         [Parameter(
             Mandatory = $true)]
         [ValidateNotNullOrEmpty()]
+        [String] $Name,
+        [Parameter(
+            Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
         [String] $Version,
         [Parameter(
             Mandatory = $true)]
@@ -56,8 +60,8 @@ function New-NevergreenApp {
         [Alias('Url')]
         [String] $Uri,
         [Parameter(
-            Mandatory = $false)]
-        [ValidateSet('x86', 'x64', 'ARM32', 'ARM64')]
+            Mandatory = $true)]
+        [ValidateSet('x86', 'x64', 'ARM32', 'ARM64', 'Multi')]
         [String] $Architecture,
         [Parameter(
             Mandatory = $false)]
@@ -82,6 +86,7 @@ function New-NevergreenApp {
     )
 
     $Output = [PSCustomObject]@{
+        Name    = $Name
         Version = $Version
         Uri     = $Uri
     }

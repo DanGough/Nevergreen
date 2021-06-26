@@ -12,7 +12,7 @@ foreach ($Ring in $Rings) {
             $RegEx = "$Channel(?:.+\n)+((?:\d+\.)+\d+).+win-$Architecture.+(http.+\.$Type)"
 
             if ($DownloadText -match $RegEx) {
-                New-NevergreenApp -Version $matches[1] -Uri $matches[2] -Architecture $Architecture -Type $Type -Ring $Ring
+                New-NevergreenApp -Name 'Microsoft Teams' -Version $matches[1] -Uri $matches[2] -Architecture $Architecture -Type $Type -Ring $Ring
             }
             else {
                 Write-Warning "No match found for Microsoft Teams $Channel $Architecture $Type"

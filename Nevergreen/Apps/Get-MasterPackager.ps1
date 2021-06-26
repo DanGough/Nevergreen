@@ -2,4 +2,4 @@ $URL32 = Get-Link -Uri 'https://www.masterpackager.com/pricing' -MatchProperty h
 
 $Version = $URL32 | Get-Version
 
-New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86'
+New-NevergreenApp -Name 'Master Packager' -Version $Version -Uri $URL32 -Architecture 'x86'

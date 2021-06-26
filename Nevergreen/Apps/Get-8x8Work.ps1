@@ -2,5 +2,5 @@ $URL32,$URL64 = Get-Link -Uri 'https://support.8x8.com/cloud-phone-service/voice
 
 $Version32,$Version64 = $URL32,$URL64 | Get-Version -Pattern '((?:\d+\.)+\d+(?:-\d+)?)' -ReplaceWithDot
 
-New-NevergreenApp -Version $Version32 -Uri $URL32 -Architecture 'x86'
-New-NevergreenApp -Version $Version64 -Uri $URL64 -Architecture 'x64'
+New-NevergreenApp -Name '8x8 Work' -Version $Version32 -Uri $URL32 -Architecture 'x86'
+New-NevergreenApp -Name '8x8 Work' -Version $Version64 -Uri $URL64 -Architecture 'x64'

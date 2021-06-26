@@ -2,4 +2,4 @@ $Version = Get-Version -Uri 'https://www.komodolabs.com/product-downloads' -Patt
 
 $URL32 = Get-Link -Uri 'https://www.komodolabs.com/product-downloads' -MatchProperty href -Pattern 'newtpro\.exe$' -PrefixDomain
 
-New-NevergreenApp -Version $Version -Uri $URL32 -Architecture 'x86'
+New-NevergreenApp -Name 'Komodo Labs NEWT Pro' -Version $Version -Uri $URL32 -Architecture 'x86'
