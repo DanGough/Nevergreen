@@ -64,7 +64,7 @@ function Get-NevergreenApp {
                     }
                 }
                 catch {
-                    Write-Error -ErrorRecord $_
+                    Write-Error -Message "Error retriving results for '$AppName': $($_.Exception.Message)"
                 }
             }
             else {
