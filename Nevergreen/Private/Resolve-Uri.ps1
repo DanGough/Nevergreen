@@ -108,7 +108,7 @@ function Resolve-Uri {
 
             }
             catch {
-                Write-Verbose "$($MyInvocation.MyCommand): Unable to resolve URI: $_"
+                Throw "$($MyInvocation.MyCommand): Unable to resolve URI: $($_.Exception.Message)"
             }
 
             if ($ResolvedUri) {
