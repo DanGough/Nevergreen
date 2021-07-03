@@ -1,5 +1,5 @@
 $BaseURL = 'https://docs.microsoft.com/en-us/sysinternals/downloads'
-$Links = (Invoke-WebRequest -Uri $BaseURL).Links | Where-Object outerHTML -Match 'data-linktype'
+$Links = (Invoke-WebRequest -Uri $BaseURL -DisableKeepAlive -UseBasicParsing).Links | Where-Object outerHTML -Match 'data-linktype'
 
 foreach ($Link in $Links) {
 
@@ -20,11 +20,14 @@ foreach ($Link in $Links) {
 
     }
     elseif ($Link.href -match 'pstools') {
+
         $DownloadPageURL = $Link.href | Set-UriPrefix -Prefix $BaseURL
         $URL = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern '\.zip$'
         $LastModified = (Resolve-Uri -Uri $URL).LastModified
         $Version = @($LastModified.Year,$LastModified.Month,$LastModified.Day) -join '.'
+
         New-NevergreenApp -Name 'Microsoft Sysinternals PsTools Suite' -Version $Version -Uri $URL -Type 'Zip' -Architecture 'Multi' -Platform 'Windows'
+
     }
     elseif ($Link.outerHTML -match '<a href="(.+)" data-linktype="relative-path">(.+)</a>') {
 
