@@ -58,19 +58,15 @@ function Get-Version {
         if ($PsCmdlet.ParameterSetName -eq 'Uri') {
 
             $ProgressPreference = 'SilentlyContinue'
-            $String = $Uri.Clone()
 
-            for ($i = 0; $i -lt $Uri.Count; $i++) {
+            foreach ($CurrentUri in $Uri) {
                 try {
-                    $String[$i] = $null
-                    $String[$i] = (Invoke-WebRequest -Uri $Uri[$i] -DisableKeepAlive -UseBasicParsing).Content
+                    $String += (Invoke-WebRequest -Uri $CurrentUri -DisableKeepAlive -UseBasicParsing).Content
                 }
                 catch {
-                    Write-Error "Unable to query URL $($Uri[$i]): $_"
-                    break
+                    Write-Error "Unable to query URL '$CurrentUri': $($_.Exception.Message)"
                 }
             }
-
         }
     }
 
