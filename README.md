@@ -20,11 +20,12 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Adobe Creative Cloud
 - Adobe Acrobat Reader / Pro
   - MSP update patches only
-  - Recently Evergreen was not showing the latest version nor any 64-bit patches. Both issues have since been resolved, if that implementation proves to be reliable, these apps may be deprecated here.
+  - Evergreen does not always report the latest optional releases, whereas this implementation should.
 - Advanced IP Scanner
 - Advanced Port Scanner
 - AutoIt
 - Cisco Webex
+  - This is the new Webex app, AKA Webex Teams. Evergreen returns results for the old Webex Meetings app. This may be deprecated if Evergreen is updated to support both.
 - Cisco Webex Support Manager
 - IGEL Universal Management Suite
 - Komodo Labs NEWT Professional
@@ -37,10 +38,9 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Microsoft OpenJDK
 - Microsoft Power BI Desktop
 - Microsoft Power BI Report Builder
-- Microsoft Remote Desktop (for WVD)
 - Microsoft SSMS
   - This is already in Evergreen but has a known issue against it where the feed is providing the build version rather than the release version most know it by.
-- Microsoft Sysinternals tools
+- Microsoft Sysinternals tools (all suites and individual tools)
 - Microsoft Teams
   - This provides all of the beta/dev releases that Evergreen does not.
 - Microsoft Windows ADK
@@ -55,6 +55,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Tableau Reader
 - Zebra Card Studio
 - Zoom
+  - This is already in Evergreen but this implementation returns additional installer types
 
 <br>
 
