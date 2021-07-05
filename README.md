@@ -27,6 +27,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Advanced Installer
 - Advanced IP Scanner
 - Advanced Port Scanner
+- Apple iTunes
 - AutoIt
 - Cisco Webex
   - This is the new Webex app, AKA Webex Teams. Evergreen returns results for the old Webex Meetings app. This may be deprecated if Evergreen is updated to support both.
