@@ -17,6 +17,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 <br>
 
 - 8x8 Work
+- Adobe/Harman AIR
 - Adobe Creative Cloud
 - Adobe Acrobat Reader / Pro
   - MSP update patches only
