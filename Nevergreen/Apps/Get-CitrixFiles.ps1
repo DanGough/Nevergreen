@@ -11,7 +11,7 @@ try {
     $URLExe = Get-Link -Uri 'https://www.citrix.com/downloads/sharefile/clients-and-plug-ins/citrix-files-for-windows.html' -MatchProperty outerHTML -Pattern '\.exe' -ReturnProperty outerHTML
     if ($URLExe -match 'rel="(//.+\.exe[^"]+)') {
         $URLExe = "https:" + $Matches[1]
-        New-NevergreenApp -Name 'Citrix Files' -Version $Version -Uri $URLExe -Architecture 'x64' -Type 'Exe'
+        New-NevergreenApp -Name 'Citrix Files' -Version $Version -Uri $URLExe -Architecture 'Multi' -Type 'Exe'
     }
 
 }
