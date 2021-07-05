@@ -21,13 +21,19 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Adobe Acrobat Reader / Pro
   - MSP update patches only
   - Evergreen does not always report the latest optional releases, whereas this implementation should.
+- AdoptOpenJDK
+  - Evergreen does not currently support all release types.
+- Advanced Installer
 - Advanced IP Scanner
 - Advanced Port Scanner
 - AutoIt
 - Cisco Webex
   - This is the new Webex app, AKA Webex Teams. Evergreen returns results for the old Webex Meetings app. This may be deprecated if Evergreen is updated to support both.
 - Cisco Webex Support Manager
+- Citrix Files
+- Google Drive
 - IGEL Universal Management Suite
+- Jabra Direct
 - Komodo Labs NEWT Professional
 - Komodo Labs Slitheris
 - Lenovo Commercial Vantage
@@ -45,11 +51,13 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
   - This provides all of the beta/dev releases that Evergreen does not.
 - Microsoft Windows ADK
 - Mimecast for Outlook
+- nmap
 - Philippe Jounin Tftpd64
 - Plantronics Hub
 - QGIS
 - Radio Detection CAT Manager
 - Redstor Backup Pro Storage Platform Console
+- RIA eID
 - Simon Tatham PuTTY
 - Tableau Desktop
 - Tableau Reader
