@@ -1,34 +1,38 @@
 try {
 
-    #Some downloads on homepage have 'latest' instead of the real version in the filename. Get the base location for all files then build up the URLs from the page hosting all of the file hashes
-    $DownloadBaseURL = (Get-Link -Uri 'https://docs.conda.io/en/latest/miniconda.html' -MatchProperty href -Pattern '\.exe$') -replace '(.+/)[^/]+\.exe','$1'
-
-    #Empty array to track variants to that we only return one of each, i.e. the latest version
-    $Variants = @()
-
+    #Get hashes of all releases
+    $FileNames = @{}
     ((Invoke-Webrequest -Uri 'https://raw.githubusercontent.com/conda/conda-docs/master/docs/source/miniconda_hashes.rst' -DisableKeepAlive -UseBasicParsing).Content |
-    Select-String -Pattern '((Miniconda\d)-py(\d+)_(?:\d+\.)+\d+-Windows-(x86(?:_64)?)\.exe).+(\w{64})' -AllMatches).Matches | ForEach-Object {
-        $FileName = $_.Groups[1].Value
+    Select-String -Pattern '(Miniconda\S+\.exe).+(\w{64})' -AllMatches).Matches | ForEach-Object {
+        $FileNames.Add($_.Groups[2].Value, $_.Groups[1].Value)
+    }
+
+    #Get all links from main download page, swap URLs with 'latest' in filename for the proper versioned name via hash matching and extract properties from filename
+    ((Invoke-Webrequest -Uri 'https://raw.githubusercontent.com/conda/conda-docs/master/docs/source/miniconda.rst' -DisableKeepAlive -UseBasicParsing).Content |
+    Select-String -Pattern '(http\S+(Miniconda\d)-\S+-Windows-(x86(?:_64)?)\.exe).+(\w{64})' -AllMatches).Matches | ForEach-Object {
+
+        $URL = $_.Groups[1].Value
         $Name = $_.Groups[2].Value
-        $Channel  = "Python " + $_.Groups[3].Value.Insert(1,'.')
-        $Architecture = $_.Groups[4].Value
+
+        $Architecture = $_.Groups[3].Value
         if ($Architecture -eq 'x86_64') {
             $Architecture = 'x64'
         }
-        $SHA256 = $_.Groups[5].Value
-        $Version = $FileName | Get-Version
-        $URL = "$DownloadBaseURL$FileName"
 
-        $Variant = "$Name $Channel $Architecture"
+        $Hash = $_.Groups[4].Value
 
-        try {
-            if ($Variant -notin $Variants -and (Resolve-Uri -Uri $URL)) {
-                New-NevergreenApp -Name $Name -Channel $Channel -Architecture $Architecture -Type 'Exe' -Version $Version -Uri $URL -SHA256 $SHA256
-                $Variants += $Variant
-            }
+        if ($URL -match 'latest' -and $Hash -in $FileNames.Keys) {
+            $URL = $URL -replace '[^/]+$',$FileNames[$Hash]
         }
-        catch {
-            Write-Error "$($MyInvocation.MyCommand): $($_.Exception.Message)"
+
+        $Version = $URL | Get-Version
+
+        if ($URL -match 'py(\d+)') {
+            $Channel = "Python $($matches[1].Insert(1,'.'))"
+        }
+
+        if (Resolve-Uri $URL) {
+            New-NevergreenApp -Name $Name -Channel $Channel -Architecture $Architecture -Type 'Exe' -Version $Version -Uri $URL -SHA256 $Hash
         }
 
     }
