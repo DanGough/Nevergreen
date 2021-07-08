@@ -27,12 +27,19 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Advanced Installer
 - Advanced IP Scanner
 - Advanced Port Scanner
+- Anaconda
 - Apple iTunes
+- AppVentix
 - AutoIt
 - Cisco Webex
   - This is the new Webex app, AKA Webex Teams. Evergreen returns results for the old Webex Meetings app. This may be deprecated if Evergreen is updated to support both.
 - Cisco Webex Support Manager
 - Citrix Files
+- Fujifilm Pixel Shift Combiner
+- Fujifilm Raw File Converter EX
+- Fujifilm X Acquire
+- Fujifilm X Raw Studio
+- Fujifilm X Webcam
 - Google Drive
 - IGEL Universal Management Suite
 - Jabra Direct
@@ -56,6 +63,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - nmap
 - Philippe Jounin Tftpd64
 - Plantronics Hub
+- Python
 - QGIS
 - Radio Detection CAT Manager
 - Redstor Backup Pro Storage Platform Console
@@ -63,6 +71,13 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Simon Tatham PuTTY
 - Tableau Desktop
 - Tableau Reader
+- TMurgent AppVDefConGroups
+- TMurgent AppVManage
+- TMurgent AppVManifestEditor
+- TMurgent PsfTooling
+- TMurgent PullApps
+- TMurgent TMEdit
+- TMurgent TMEditX
 - Zebra Card Studio
 - Zoom
   - This is already in Evergreen but this implementation returns additional installer types
