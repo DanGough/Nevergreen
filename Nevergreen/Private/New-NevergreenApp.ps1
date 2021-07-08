@@ -15,19 +15,19 @@ function New-NevergreenApp {
         https://github.com/DanGough/Nevergreen
 
     .PARAMETER Name
-        The name of the application.
+        Mandatory. The name of the application.
 
     .PARAMETER Uri
-        The download URI for the application.
+        Mandatory. The download URI for the application.
 
     .PARAMETER Version
-        The application version.
+        Mandatory. The application version.
 
     .PARAMETER Architecture
-        Optional. Must match x86, x64. ARM32 or ARM64 if supplied.
+        Mandatory. Must match x86, x64, ARM32, ARM64 or Multi.
 
     .PARAMETER Type
-        Optional. Must match Msi, Exe, Zip, MSIX, AppX if supplied.
+        Mandatory. Must match Msi, Exe, Zip, MSIX, AppX if supplied.
 
     .PARAMETER Language
         Optional. The language of the application installer, e.g. 'en'.
@@ -39,7 +39,13 @@ function New-NevergreenApp {
         Optional. The channel, e.g. 'Enterprise'.
 
     .PARAMETER Platform
-        Optional. The platform, e.g. 'Citrix'.
+        Optional. The platform, e.g. 'Windows Server'.
+
+    .PARAMETER MD5
+        Optional. The MD5 hash of the file.
+
+    .PARAMETER SHA256
+        Optional. The SHA256 hash of the file.
 
     .EXAMPLE
         New-NevergreenApp -Uri 'http://somewhere.com/something.exe' -Version '1.0' -Architecture 'x64' -Type 'Exe'
@@ -67,7 +73,7 @@ function New-NevergreenApp {
         [ValidateSet('x86', 'x64', 'ARM32', 'ARM64', 'Multi')]
         [String] $Architecture,
         [Parameter(
-            Mandatory = $false)]
+            Mandatory = $true)]
         [ValidateSet('Msi', 'Exe', 'Zip', 'MSIX', 'AppX')]
         [String] $Type,
         [Parameter(
@@ -85,25 +91,19 @@ function New-NevergreenApp {
         [Parameter(
             Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        [String] $Platform
+        [String] $Platform,
+        [Parameter(
+            Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [String] $MD5,
+        [Parameter(
+            Mandatory = $false)]
+        [ValidateNotNullOrEmpty()]
+        [String] $SHA256
     )
 
     $Output = [PSCustomObject]@{
         Name    = $Name
-        Version = $Version
-        Uri     = $Uri
-    }
-
-    if ($Architecture) {
-        Add-Member -InputObject $Output -MemberType NoteProperty -Name 'Architecture' -Value $Architecture
-    }
-
-    if ($Type) {
-        Add-Member -InputObject $Output -MemberType NoteProperty -Name 'Type' -Value $Type
-    }
-
-    if ($Language) {
-        Add-Member -InputObject $Output -MemberType NoteProperty -Name 'Language' -Value $Language
     }
 
     if ($Ring) {
@@ -114,8 +114,31 @@ function New-NevergreenApp {
         Add-Member -InputObject $Output -MemberType NoteProperty -Name 'Channel' -Value $Channel
     }
 
+    if ($Language) {
+        Add-Member -InputObject $Output -MemberType NoteProperty -Name 'Language' -Value $Language
+    }
+
     if ($Platform) {
         Add-Member -InputObject $Output -MemberType NoteProperty -Name 'Platform' -Value $Platform
+    }
+
+    if ($Architecture) {
+        Add-Member -InputObject $Output -MemberType NoteProperty -Name 'Architecture' -Value $Architecture
+    }
+
+    if ($Type) {
+        Add-Member -InputObject $Output -MemberType NoteProperty -Name 'Type' -Value $Type
+    }
+
+    Add-Member -InputObject $Output -MemberType NoteProperty -Name 'Version' -Value $Version
+    Add-Member -InputObject $Output -MemberType NoteProperty -Name 'Uri' -Value $Uri
+
+    if ($MD5) {
+        Add-Member -InputObject $Output -MemberType NoteProperty -Name 'MD5' -Value $MD5
+    }
+
+    if ($SHA256) {
+        Add-Member -InputObject $Output -MemberType NoteProperty -Name 'SHA256' -Value $SHA256
     }
 
     $Output
