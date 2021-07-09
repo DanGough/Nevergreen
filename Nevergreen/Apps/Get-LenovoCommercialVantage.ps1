@@ -2,4 +2,4 @@ $URL32 = Get-Version -Uri 'https://support.lenovo.com/gb/en/solutions/hf003321-l
 
 $Version = $URL32 | Get-Version
 
-New-NevergreenApp -Name 'Lenovo Commercial Vantage' -Version $Version -Uri $URL32 -Architecture 'x86'
+New-NevergreenApp -Name 'Lenovo Commercial Vantage' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Zip'

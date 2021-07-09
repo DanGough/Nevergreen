@@ -7,7 +7,7 @@ foreach ($Version in $Versions) {
     $URL32 = $Links | Where-Object outerHTML -match "ADK for Windows 10, version $Version" | Select-Object -ExpandProperty href -First 1
 
     if ($URL32) {
-        New-NevergreenApp -Name 'Microsoft Windows ADK' -Version $Version -Uri $URL32 -Architecture 'x86'
+        New-NevergreenApp -Name 'Microsoft Windows ADK' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Exe'
     }
 
 }

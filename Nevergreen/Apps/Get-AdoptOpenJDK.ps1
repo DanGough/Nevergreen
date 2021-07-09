@@ -29,8 +29,9 @@ foreach ($MajorVersion in $MajorVersions) {
                             }
 
                             $Release | ForEach-Object {
-                                New-NevergreenApp -Name "AdoptOpenJDK$MajorVersion" -Version $_.version.openjdk_version -Uri $_.binary.installer.link -Platform "$JvmType $HeapSize $ImageType" -Architecture $Architecture -Type 'Msi'
-                                New-NevergreenApp -Name "AdoptOpenJDK$MajorVersion" -Version $_.version.openjdk_version -Uri $_.binary.package.link -Platform "$JvmType $HeapSize $ImageType" -Architecture $Architecture -Type 'Zip'
+                                $Version = ($_.version.openjdk_version.Replace('_','.').Replace('+','.') -Replace '-[a-z]','.') -Replace '^1\.8\.','8.'
+                                New-NevergreenApp -Name "AdoptOpenJDK$MajorVersion" -Version $Version -Uri $_.binary.installer.link -Platform "$JvmType $HeapSize $ImageType" -Architecture $Architecture -Type 'Msi'
+                                New-NevergreenApp -Name "AdoptOpenJDK$MajorVersion" -Version $Version -Uri $_.binary.package.link -Platform "$JvmType $HeapSize $ImageType" -Architecture $Architecture -Type 'Zip'
                             }
                         }
 

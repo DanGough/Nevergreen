@@ -2,4 +2,4 @@ $Version = Get-Version -Uri 'https://www.autoitscript.com/site/autoit/downloads'
 
 $URL32 = Get-Link -Uri 'https://www.autoitscript.com/site/autoit/downloads' -MatchProperty href -Pattern 'autoit-v.+-setup\.exe' -PrefixDomain
 
-New-NevergreenApp -Name 'AutoIt' -Version $Version -Uri $URL32 -Architecture 'x86'
+New-NevergreenApp -Name 'AutoIt' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Exe'

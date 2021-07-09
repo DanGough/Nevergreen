@@ -4,4 +4,4 @@ $URL32 = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'RedstorBac
 
 $Version = $URL32 | Get-Version -Pattern '((?:\d+\.)+\d+)\.exe$'
 
-New-NevergreenApp -Name 'Redstor Backup Pro Storage Platform Console' -Version $Version -Uri $URL32 -Architecture 'x86'
+New-NevergreenApp -Name 'Redstor Backup Pro Storage Platform Console' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Exe'

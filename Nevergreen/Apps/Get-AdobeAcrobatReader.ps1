@@ -15,7 +15,7 @@ foreach ($Platform in $Platforms) {
         $URL = Get-Link -Uri $ReleaseURL -MatchProperty href -Pattern $Platform.Pattern
         if ($URL) {
             $Version = ($URL | Get-Version -Pattern '(\d{8,12}).+msp') -replace '(\d{2})(\d{3})(\d+)','$1.$2.$3'
-            New-NevergreenApp -Name 'Adobe Acrobat Reader' -Version $Version -Uri $URL -Architecture $Platform.Architecture -Language $Platform.Language
+            New-NevergreenApp -Name 'Adobe Acrobat Reader' -Version $Version -Uri $URL -Architecture $Platform.Architecture -Language $Platform.Language -Type 'Msp'
             break
         }
 

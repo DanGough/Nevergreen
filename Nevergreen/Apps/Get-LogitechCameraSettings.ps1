@@ -3,4 +3,4 @@ $DownloadPageURL = ((Invoke-RestMethod -Uri 'https://support.logi.com/api/v2/hel
 $URL32 = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'LogiCameraSettings.+\.exe'
 $Version = $URL32 | Get-Version
 
-New-NevergreenApp -Name 'Logitech Camera Settings' -Version $Version -Uri $URL32 -Architecture 'x86'
+New-NevergreenApp -Name 'Logitech Camera Settings' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Exe'

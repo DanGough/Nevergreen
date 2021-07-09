@@ -3,5 +3,5 @@ $URL64 = Get-Link -Uri 'https://bitbucket.org/phjounin/tftpd64/wiki/Download%20T
 $Version32 = $URL32 | Get-Version
 $Version64 = $URL64 | Get-Version
 
-New-NevergreenApp -Name 'Philippe Jounin Tftpd64' -Version $Version32 -Uri $URL32 -Architecture 'x86'
-New-NevergreenApp -Name 'Philippe Jounin Tftpd64' -Version $Version64 -Uri $URL64 -Architecture 'x64'
+New-NevergreenApp -Name 'Philippe Jounin Tftpd64' -Version $Version32 -Uri $URL32 -Architecture 'x86' -Type 'Exe'
+New-NevergreenApp -Name 'Philippe Jounin Tftpd64' -Version $Version64 -Uri $URL64 -Architecture 'x64' -Type 'Exe'
