@@ -40,7 +40,6 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Fujifilm X Acquire
 - Fujifilm X Raw Studio
 - Fujifilm X Webcam
-- Google Drive
 - IGEL Universal Management Suite
 - Jabra Direct
 - Komodo Labs NEWT Professional
@@ -74,7 +73,6 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - TMurgent AppVDefConGroups
 - TMurgent AppVManage
 - TMurgent AppVManifestEditor
-- TMurgent PsfTooling
 - TMurgent PullApps
 - TMurgent TMEdit
 - TMurgent TMEditX
