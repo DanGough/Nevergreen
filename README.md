@@ -59,6 +59,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
   - This provides all of the beta/dev releases that Evergreen does not.
 - Microsoft Windows ADK
 - Mimecast for Outlook
+- Miniconda
 - nmap
 - Philippe Jounin Tftpd64
 - Plantronics Hub
