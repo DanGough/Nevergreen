@@ -1,14 +1,16 @@
 $Apps = @(
     @{Name = 'Zoom'; Architecture = 'x86'; Type = 'Exe'; Uri = 'https://zoom.us/client/latest/ZoomInstallerFull.exe' }
-    @{Name = 'Zoom'; Architecture = 'x64'; Type = 'Exe'; Uri = 'https://zoom.us/client/latest/ZoomInstaller.exe?archType=x64' }
+    @{Name = 'Zoom'; Architecture = 'x64'; Type = 'Exe'; Uri = 'https://zoom.us/client/latest/ZoomInstallerFull.exe?archType=x64' }
+    @{Name = 'Zoom'; Architecture = 'ARM64'; Type = 'Exe'; Uri = 'https://zoom.us/client/latest/ZoomInstallerFull.exe?archType=winarm64' }
     @{Name = 'Zoom'; Architecture = 'x86'; Type = 'Msi'; Uri = 'http://zoom.us/client/latest/ZoomInstallerFull.msi' }
     @{Name = 'Zoom'; Architecture = 'x64'; Type = 'Msi'; Uri = 'http://zoom.us/client/latest/ZoomInstallerFull.msi?archType=x64' }
+    @{Name = 'Zoom'; Architecture = 'ARM64'; Type = 'Msi'; Uri = 'http://zoom.us/client/latest/ZoomInstallerFull.msi?archType=winarm64' }
     @{Name = 'Zoom Plugin for Microsoft Outlook'; Architecture = 'x86'; Type = 'Msi'; Uri = 'http://zoom.us/client/latest/ZoomOutlookPluginSetup.msi' }
     @{Name = 'Zoom Plugin for IBM Notes'; Architecture = 'x86'; Type = 'Msi'; Uri = 'https://zoom.us/client/latest/ZoomNotesPluginSetup.msi' }
     @{Name = 'Zoom Notes Admin Tool'; Architecture = 'x86'; Type = 'Msi'; Uri = 'https://zoom.us/client/latest/ZoomNotesPluginAdminTool.msi' }
     @{Name = 'Zoom Plugin for Skype for Business'; Architecture = 'x86'; Type = 'Msi'; Uri = 'http://zoom.us/client/latest/ZoomLyncPluginSetup.msi' }
-    @{Name = 'Zoom Rooms'; Architecture = 'x86'; Type = 'Exe'; Uri = 'http://zoom.us/client/latest/ZoomRooms.exe' }
-    @{Name = 'Zoom Rooms'; Architecture = 'x86'; Type = 'Msi'; Uri = 'https://zoom.us/client/latest/ZoomRoomsInstaller.msi' }
+    @{Name = 'Zoom Rooms'; Architecture = 'x86'; Type = 'Exe'; Uri = (Get-Link 'https://zoom.us/download' -MatchProperty href -Pattern 'rooms\S+exe' -PrefixDomain) }
+    @{Name = 'Zoom Rooms'; Architecture = 'x86'; Type = 'Msi'; Uri = (Get-Link 'https://zoom.us/download' -MatchProperty href -Pattern 'rooms\S+exe' -PrefixDomain) }
 )
 
 foreach ($App in $Apps) {
