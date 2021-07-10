@@ -10,7 +10,7 @@ $Apps = @(
     @{Name = 'Zoom Notes Admin Tool'; Architecture = 'x86'; Type = 'Msi'; Uri = 'https://zoom.us/client/latest/ZoomNotesPluginAdminTool.msi' }
     @{Name = 'Zoom Plugin for Skype for Business'; Architecture = 'x86'; Type = 'Msi'; Uri = 'http://zoom.us/client/latest/ZoomLyncPluginSetup.msi' }
     @{Name = 'Zoom Rooms'; Architecture = 'x86'; Type = 'Exe'; Uri = (Get-Link 'https://zoom.us/download' -MatchProperty href -Pattern 'rooms\S+exe' -PrefixDomain) }
-    @{Name = 'Zoom Rooms'; Architecture = 'x86'; Type = 'Msi'; Uri = (Get-Link 'https://zoom.us/download' -MatchProperty href -Pattern 'rooms\S+exe' -PrefixDomain) }
+    @{Name = 'Zoom Rooms'; Architecture = 'x86'; Type = 'Msi'; Uri = (Get-Link 'https://zoom.us/download' -MatchProperty href -Pattern 'rooms\S+msi' -PrefixDomain) }
 )
 
 foreach ($App in $Apps) {
