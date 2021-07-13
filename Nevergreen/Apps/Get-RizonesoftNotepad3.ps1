@@ -9,9 +9,12 @@ try {
 
     foreach ($App in $Apps) {
         $URL = $Links | Where-Object outerHTML -match $App.Pattern | Select-Object -ExpandProperty href -First 1
-        $Version = $matches[1]
-        New-NevergreenApp -Name 'Notepad3' -Version $Version -Uri $URL -Architecture $App.Architecture -Type $App.Type
+        if ($URL) {
+            $Version = $matches[1]
+            New-NevergreenApp -Name 'Notepad3' -Version $Version -Uri $URL -Architecture $App.Architecture -Type $App.Type
+        }
     }
+
 }
 catch {
     Write-Error "$($MyInvocation.MyCommand): $($_.Exception.Message)"
