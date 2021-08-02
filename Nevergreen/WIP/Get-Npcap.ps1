@@ -4,4 +4,4 @@ $URL = Get-Link -Uri 'https://nmap.org/npcap/' -MatchProperty href -Pattern 'npc
 
 $Version = $URL | Get-Version
 
-New-NevergreenApp -Name 'Npcap' -Version $Version -Uri $URL -Architecture 'Multi'
+New-NevergreenApp -Name 'Npcap' -Version $Version -Uri $URL -Architecture 'Multi' -Type 'Exe'
