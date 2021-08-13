@@ -1,40 +1,8 @@
-$Response = Invoke-WebRequest -Uri 'https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html' -UseBasicParsing
+$Version = Get-Version -Uri 'https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html' -Pattern 'latest\srelease\s\(((?:\d+\.)+\d+)\)'
 
-$Version = ($Response.Content | Select-String -Pattern 'latest\srelease\s\(((?:\d+\.)+(?:\d+))\)').Matches.Groups[1].Value
+$URL64,$URLARM64,$URL32,$URLARM32 = Get-Link -Uri 'https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html' -MatchProperty href -Pattern 'putty-64bit.+\.msi','putty-arm64.+\.msi','putty-\d+\.\d+.+\.msi','putty-arm32.+\.msi'
 
-$URL64 = $Response.Links | Where-Object href -Like '*putty-64bit*.msi' | Select-Object -First 1 -ExpandProperty href
-$URL32 = $Response.Links | Where-Object href -Like '*w32/putty*.msi' | Select-Object -First 1 -ExpandProperty href
-$URLARM64 = $Response.Links | Where-Object href -Like '*putty-arm64*.msi' | Select-Object -First 1 -ExpandProperty href
-$URLARM32 = $Response.Links | Where-Object href -Like '*putty-arm32*.msi' | Select-Object -First 1 -ExpandProperty href
-
-if ($Version -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x64'
-        URI          = $URL64
-    }
-}
-
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
-
-if ($Version -and $URLARM64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'ARM64'
-        URI          = $URLARM64
-    }
-}
-
-if ($Version -and $URLARM32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'ARM32'
-        URI          = $URLARM32
-    }
-}
+New-NevergreenApp -Name 'Simon Tatham PuTTY' -Version $Version -Uri $URL64 -Architecture 'x64' -Type 'Msi'
+New-NevergreenApp -Name 'Simon Tatham PuTTY' -Version $Version -Uri $URLARM64 -Architecture 'ARM64' -Type 'Msi'
+New-NevergreenApp -Name 'Simon Tatham PuTTY' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Msi'
+New-NevergreenApp -Name 'Simon Tatham PuTTY' -Version $Version -Uri $URLARM32 -Architecture 'ARM32' -Type 'Msi'

@@ -1,10 +1,4 @@
-$URL32 = ((Invoke-WebRequest 'https://www.advanced-ip-scanner.com' -UseBasicParsing).Links | Where-Object href -Like '*Advanced_IP_Scanner*.exe')[0].href
-$Version = ($URL32 | Select-String -Pattern 'Advanced_IP_Scanner_((?:\d+\.)+(?:\d+)).exe').Matches.Groups[1].Value
+$URL32 = Get-Link -Uri 'https://www.advanced-ip-scanner.com' -MatchProperty href -Pattern 'Advanced_IP_Scanner.+\.exe'
+$Version = $URL32 | Get-Version
 
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
+New-NevergreenApp -Name 'Advanced IP Scanner' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Exe'

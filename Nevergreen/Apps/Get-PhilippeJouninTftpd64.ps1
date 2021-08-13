@@ -1,19 +1,7 @@
-$URL32= ((Invoke-WebRequest 'https://bitbucket.org/phjounin/tftpd64/wiki/Download%20Tftpd64' -UseBasicParsing).Links | Where-Object href -Like '*tftpd32-*-setup.exe')[0].href
-$URL64 = ((Invoke-WebRequest 'https://bitbucket.org/phjounin/tftpd64/wiki/Download%20Tftpd64' -UseBasicParsing).Links | Where-Object href -Like '*tftpd64-*-setup.exe')[0].href
-$Version = ((Invoke-WebRequest 'https://bitbucket.org/phjounin/tftpd64/wiki/Download%20Tftpd64' -UseBasicParsing).Content | Select-String -Pattern 'v((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
+$URL32 = Get-Link -Uri 'https://bitbucket.org/phjounin/tftpd64/wiki/Download%20Tftpd64' -MatchProperty href -Pattern 'tftpd32-.+-setup\.exe'
+$URL64 = Get-Link -Uri 'https://bitbucket.org/phjounin/tftpd64/wiki/Download%20Tftpd64' -MatchProperty href -Pattern 'tftpd64-.+-setup\.exe'
+$Version32 = $URL32 | Get-Version
+$Version64 = $URL64 | Get-Version
 
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
-
-if ($Version -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x64'
-        URI          = $URL64
-    }
-}
+New-NevergreenApp -Name 'Philippe Jounin Tftpd64' -Version $Version32 -Uri $URL32 -Architecture 'x86' -Type 'Exe'
+New-NevergreenApp -Name 'Philippe Jounin Tftpd64' -Version $Version64 -Uri $URL64 -Architecture 'x64' -Type 'Exe'

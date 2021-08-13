@@ -16,24 +16,71 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 ## Supported apps
 <br>
 
+- 8x8 Work
+- Adobe/Harman AIR
+- Adobe Creative Cloud
 - Adobe Acrobat Reader / Pro
   - MSP update patches only
-  - Recently Evergreen was not showing the latest version nor any 64-bit patches. Both issues have since been resolved, if that implementation proves to be reliable, these apps may be deprecated here.
+  - Evergreen does not always report the latest optional releases, whereas this implementation should.
+- AdoptOpenJDK
+  - Evergreen does not currently support all release types.
+- Advanced Installer
 - Advanced IP Scanner
 - Advanced Port Scanner
+- Anaconda
+- Apple iTunes
+- AppVentix
+- AutoIt
 - Cisco Webex
+  - This is the new Webex app, AKA Webex Teams. Evergreen returns results for the old Webex Meetings app. This may be deprecated if Evergreen is updated to support both.
+- Cisco Webex Support Manager
+- Citrix Files
+- Fujifilm Pixel Shift Combiner
+- Fujifilm Raw File Converter EX
+- Fujifilm X Acquire
+- Fujifilm X Raw Studio
+- Fujifilm X Webcam
 - IGEL Universal Management Suite
+- Jabra Direct
+- Komodo Labs NEWT Professional
+- Komodo Labs Slitheris
+- Lenovo Commercial Vantage
+- Logitech Camera Setings
+- Master Packager
 - Microsoft Azure CLI
 - Microsoft Azure Information Protection UL Client
+- Microsoft OpenJDK
 - Microsoft Power BI Desktop
 - Microsoft Power BI Report Builder
-- Microsoft Remote Desktop (for WVD)
 - Microsoft SSMS
   - This is already in Evergreen but has a known issue against it where the feed is providing the build version rather than the release version most know it by.
+- Microsoft Sysinternals tools (all suites and individual tools)
+- Microsoft Teams
+  - This provides all of the beta/dev releases that Evergreen does not.
+- Microsoft Windows ADK
 - Mimecast for Outlook
+- Miniconda
+- nmap
+- Philippe Jounin Tftpd64
+- Plantronics Hub
+- Python
 - QGIS
 - Radio Detection CAT Manager
+- Redstor Backup Pro Storage Platform Console
+- RIA eID
 - Simon Tatham PuTTY
+- Tableau Desktop
+- Tableau Reader
+- TMurgent AppVDefConGroups
+- TMurgent AppVManage
+- TMurgent AppVManifestEditor
+- TMurgent PullApps
+- TMurgent TMEdit
+- TMurgent TMEditX
+- Zebra Card Studio
+- Zoom
+  - This is already in Evergreen but this implementation returns additional installer types
+
 <br>
 
 The [Apps folder in the main branch](https://github.com/DanGough/Nevergreen/tree/main/Nevergreen/Apps) will always show the apps supported in the latest release.
@@ -149,7 +196,7 @@ Get-NevergreenApp -Name MicrosoftPowerBIDesktop | Where-Object {$_.Architecture 
 
 Combine both commands to get all results!
 ```powershell
-Find-NevergreenApp | ForEach-Object {"`n$_`:"; Get-NevergreenApp $_ | Format-Table}
+Find-NevergreenApp | Get-NevergreenApp
 ```
 
 

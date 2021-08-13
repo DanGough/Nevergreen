@@ -1,28 +1,28 @@
-$DownloadPageURL = 'https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/' + ((Invoke-WebRequest -Uri 'https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/index.html' -UseBasicParsing).Links | Where-Object title -EQ 'next chapter' | Select-Object -First 1 -ExpandProperty href)
-$DownloadPage = Invoke-WebRequest -Uri $DownloadPageURL -UseBasicParsing
-$Version = ($DownloadPage.Content | Select-String -Pattern '<title>(\d+\.\d+\.\w+)\s').Matches.Groups[1].Value
+$Platforms = @(
+    @{Architecture = 'x86'; Language = 'Neutral'; Pattern = 'AcrobatDCUpd\d{8,12}\.msp'}
+    @{Architecture = 'x64'; Language = 'Neutral'; Pattern = 'AcrobatDCx64Upd\d{8,12}\.msp'}
+)
 
-if ($Version -match '\D$') {
-    $Version = ($DownloadPage.Content | Select-String -Pattern 'win\s\((\d+\.\d+\.\d+)\)').Matches.Groups[1].Value
-}
+foreach ($Platform in $Platforms) {
 
-$URL64 = ($DownloadPage.Links | Where-Object href -Like '*AcrobatDCx64Upd*.msp')[0].href
-$URL32 = ($DownloadPage.Links | Where-Object href -Like '*AcrobatDCUpd*.msp')[0].href
+    $ReleaseURL = 'https://www.adobe.com/devnet-docs/acrobatetk/tools/ReleaseNotesDC/index.html'
+    $SearchCount = 5
 
-if ($Version -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x64'
-        Language     = 'Neutral'
-        URI          = $URL64
+    do {
+        $ReleaseURL = Get-Link -Uri $ReleaseURL -MatchProperty title -Pattern '^next chapter$' -PrefixParent
+
+        $URL = Get-Link -Uri $ReleaseURL -MatchProperty href -Pattern $Platform.Pattern
+        if ($URL) {
+            $Version = ($URL | Get-Version -Pattern '(\d{8,12}).+msp') -replace '(\d{2})(\d{3})(\d+)','$1.$2.$3'
+            New-NevergreenApp -Name 'Adobe Acrobat' -Version $Version -Uri $URL -Architecture $Platform.Architecture -Language $Platform.Language -Type 'Msp'
+            break
+        }
+
+        $SearchCount--
+    } until ($SearchCount -eq 0)
+
+    if ($SearchCount -eq 0) {
+        Write-Warning "Could not find release for Adobe Acrobat $($Platform.Architecture) $($Platform.Language)"
     }
-}
 
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        Language     = 'Neutral'
-        URI          = $URL32
-    }
 }

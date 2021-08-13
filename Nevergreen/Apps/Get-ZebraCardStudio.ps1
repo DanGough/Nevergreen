@@ -1,10 +1,5 @@
-$URL32 = [System.Net.HttpWebRequest]::Create('https://cardstudio.zebra.com/download').GetResponse().ResponseUri.AbsoluteUri
-$Version = ($URL32 | Select-String -Pattern 'CardStudio-Setup_((?:\d+\.)+(?:\d+)).exe').Matches.Groups[1].Value
+$URL32 = (Resolve-Uri -Uri 'https://cardstudio.zebra.com/download').Uri
 
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
+$Version = $URL32 | Get-Version
+
+New-NevergreenApp -Name 'Zebra Card Studio' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Exe'

@@ -1,11 +1,12 @@
-$Response = Invoke-WebRequest -Uri 'https://www.audacityteam.org/download/windows/' -UseBasicParsing
-$Version = ($Response.Content | Select-String -Pattern 'Current\sVersion:\s(.+)<').Matches.Groups[1].Value
-$URL = ($Response.Content | Select-String -Pattern '<a\shref="(.+)">direct\slink</a>').Matches.Groups[1].Value
+try {
 
-if ($Version -and $URL) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL
-    }
+    $URL = Get-Link -Uri 'https://www.audacityteam.org/download/windows/' -MatchProperty href -Pattern '\.exe$'
+
+    $Version = $URL | Get-Version
+
+    New-NevergreenApp -Name 'Audacity' -Version $Version -Uri $URL -Architecture 'x86' -Type 'Exe'
+
+}
+catch {
+    Write-Error "$($MyInvocation.MyCommand): $($_.Exception.Message)"
 }

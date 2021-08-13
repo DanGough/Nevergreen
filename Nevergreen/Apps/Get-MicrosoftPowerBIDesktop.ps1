@@ -1,19 +1,6 @@
-$Version = ((Invoke-WebRequest 'https://www.microsoft.com/download/details.aspx?id=58494' -UseBasicParsing).Content | Select-String -Pattern 'Version:\s+</div><p>((?:\d+\.)+(?:\d+))</p>').Matches.Groups[1].Value
-$URL32 = ((Invoke-WebRequest 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=58494' -UseBasicParsing).Links | Where-Object href -Like '*PBIDesktopSetup.exe')[0].href
-$URL64 = ((Invoke-WebRequest 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=58494' -UseBasicParsing).Links | Where-Object href -Like '*PBIDesktopSetup_x64.exe')[0].href
+$Version = Get-Version -Uri 'https://www.microsoft.com/download/details.aspx?id=58494' -Pattern 'Version:\s+</div><p>((?:\d+\.)+\d+)'
+$URL32 = Get-Link -Uri 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=58494' -MatchProperty href -Pattern 'PBIDesktopSetup\.exe$'
+$URL64 = Get-Link -Uri 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=58494' -MatchProperty href -Pattern 'PBIDesktopSetup_x64\.exe$'
 
-if ($Version -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x64'
-        URI          = $URL64
-    }
-}
-
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
+New-NevergreenApp -Name 'Microsoft Power BI Desktop' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Exe'
+New-NevergreenApp -Name 'Microsoft Power BI Desktop' -Version $Version -Uri $URL64 -Architecture 'x64' -Type 'Exe'

@@ -1,33 +1,6 @@
+$URL32,$URL64,$URLARM64 = Get-Link -Uri 'https://helpx.adobe.com/ca/download-install/kb/creative-cloud-desktop-app-download.html' -MatchProperty href -Pattern 'win32','win64','winarm64'
+$Version32,$Version64,$VersionARM64 = $URL32,$URL64,$URLARM64 | Get-Version -Pattern 'ACCCx((?:\d+_)+\d+)\.zip$' -ReplaceWithDot
 
-$URL64 = (Invoke-WebRequest -Uri 'https://helpx.adobe.com/ca/download-install/kb/creative-cloud-desktop-app-download.html' -UseBasicParsing).Links | Where-Object href -Like '*win64*' | Select-Object -ExpandProperty href -First 1
-$Version64 = ($URL64 | Select-String -Pattern 'ACCCx((?:\d+_)+\d+)\.zip$').Matches.Groups[1].Value.Replace("_", ".")
-
-$URL32 = (Invoke-WebRequest -Uri 'https://helpx.adobe.com/ca/download-install/kb/creative-cloud-desktop-app-download.html' -UseBasicParsing).Links | Where-Object href -Like '*win32*' | Select-Object -ExpandProperty href -First 1
-$Version32 = ($URL32 | Select-String -Pattern 'ACCCx((?:\d+_)+\d+)\.zip$').Matches.Groups[1].Value.Replace("_", ".")
-
-$URLARM64 = (Invoke-WebRequest -Uri 'https://helpx.adobe.com/ca/download-install/kb/creative-cloud-desktop-app-download.html' -UseBasicParsing).Links | Where-Object href -Like '*winarm64*' | Select-Object -ExpandProperty href -First 1
-$VersionARM64 = ($URLARM64 | Select-String -Pattern 'ACCCx((?:\d+_)+\d+)\.zip$').Matches.Groups[1].Value.Replace("_", ".")
-
-if ($Version64 -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version64
-        Architecture = 'x64'
-        URI          = $URL64
-    }
-}
-
-if ($Version32 -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version32
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
-
-if ($VersionARM64 -and $URLARM64) {
-    [PSCustomObject]@{
-        Version      = $VersionARM64
-        Architecture = 'ARM64'
-        URI          = $URLARM64
-    }
-}
+New-NevergreenApp -Name 'Adobe Creative Cloud' -Version $Version32 -Uri $URL32 -Architecture 'x86' -Type 'Zip'
+New-NevergreenApp -Name 'Adobe Creative Cloud' -Version $Version64 -Uri $URL64 -Architecture 'x64' -Type 'Zip'
+New-NevergreenApp -Name 'Adobe Creative Cloud' -Version $VersionARM64 -Uri $URLARM64 -Architecture 'ARM64' -Type 'Zip'

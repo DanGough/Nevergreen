@@ -1,12 +1,5 @@
-$Response = Invoke-WebRequest -Uri 'https://www.radiodetection.com/en-gb/resources/software-downloads/cat4-manager' -UseBasicParsing
+$Version = Get-Version -Uri 'https://www.radiodetection.com/en-gb/resources/software-downloads/cat4-manager' -Pattern 'Version: ((?:\d+\.)+\d+)'
 
-$Version = ($Response.Content | Select-String -Pattern 'Version:\s((?:\d+\.)+(?:\d+))<').Matches.Groups[1].Value
-$URL32 = $Response.Links | Where-Object href -Like '*.zip*' | Select-Object -First 1 -ExpandProperty href
+$URL32 = Get-Link -Uri 'https://www.radiodetection.com/en-gb/resources/software-downloads/cat4-manager' -MatchProperty href -Pattern '\.zip'
 
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
+New-NevergreenApp -Name 'Radio Detection CAT Manager' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Zip'

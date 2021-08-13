@@ -1,19 +1,7 @@
-$Version = ((Invoke-WebRequest 'https://help.webex.com/en-us/mqkve8/Webex-Release-Notes' -UseBasicParsing).Content | Select-String -Pattern 'Version:\s((?:\d+\.)+(?:\d+))</p>').Matches.Groups[1].Value
-$URL32 = (Invoke-WebRequest 'https://help.webex.com/en-us/nw5p67g/Webex-Installation-and-Automatic-Upgrade' -UseBasicParsing).Links | Where-Object href -Like '*Webex_x86.msi' | Select-Object -First 1 -ExpandProperty href
-$URL64 = (Invoke-WebRequest 'https://help.webex.com/en-us/nw5p67g/Webex-Installation-and-Automatic-Upgrade' -UseBasicParsing).Links | Where-Object href -Like '*Webex.msi' | Select-Object -First 1 -ExpandProperty href
+$Version = Get-Version -Uri 'https://help.webex.com/en-us/mqkve8/Webex-Release-Notes' -Pattern 'Version:\s((?:\d+\.)+(?:\d+))</p>'
 
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
+$URL32 = Get-Link -Uri 'https://help.webex.com/en-us/nw5p67g/Webex-Installation-and-Automatic-Upgrade' -MatchProperty href -Pattern 'Webex_x86\.msi'
+$URL64 = Get-Link -Uri 'https://help.webex.com/en-us/nw5p67g/Webex-Installation-and-Automatic-Upgrade' -MatchProperty href -Pattern 'Webex\.msi'
 
-if ($Version -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x64'
-        URI          = $URL64
-    }
-}
+New-NevergreenApp -Name 'Cisco Webex' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Msi'
+New-NevergreenApp -Name 'Cisco Webex' -Version $Version -Uri $URL64 -Architecture 'x64' -Type 'Msi'

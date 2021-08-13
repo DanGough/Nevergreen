@@ -1,10 +1,4 @@
-$URL64 = ((Invoke-WebRequest 'https://www.igel.com/software-downloads/workspace-edition/' -UseBasicParsing).Links | Where-Object data-filename -Like '*setup-igel-ums-windows*.exe')[0].'data-filename'
-$Version = $URL64 -replace '^.+setup-igel-ums-windows_((?:\d+\.)+(?:\d+))\.exe$','$1'
+$URL64 = Get-Link -Uri 'https://www.igel.com/software-downloads/workspace-edition/' -MatchProperty 'data-filename' -Pattern 'setup-igel-ums-windows.+\.exe' -ReturnProperty 'data-filename'
+$Version = $URL64 | Get-Version
 
-if ($Version -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x64'
-        URI          = $URL64
-    }
-}
+New-NevergreenApp -Name 'IGEL Universal Management Suite' -Version $Version -Uri $URL64 -Architecture 'x64' -Type 'Exe'

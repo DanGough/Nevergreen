@@ -1,25 +1,10 @@
-$Response = Invoke-WebRequest -Uri 'https://www.qgis.org/en/site/forusers/download.html' -UseBasicParsing
+$Response = Invoke-WebRequest -Uri 'https://www.qgis.org/en/site/forusers/download.html' -DisableKeepAlive -UseBasicParsing
 
 $URL64 = $Response.Links | Where-Object href -Like '*.msi' | Select-Object -First 1 -ExpandProperty href
-$Version = ($URL64 | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
+$Version64 = $URL64 | Get-Version
 
 $URL64LTR = $Response.Links | Where-Object href -Like '*.msi' | Select-Object -First 1 -Skip 1 -ExpandProperty href
-$VersionLTR = ($URL64LTR | Select-String -Pattern '((?:\d+\.)+(?:\d+))').Matches.Groups[1].Value
+$Version64LTR = $URL64LTR | Get-Version
 
-if ($Version -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x64'
-        Channel      = 'Latest'
-        URI          = $URL64
-    }
-}
-
-if ($VersionLTR -and $URL64LTR) {
-    [PSCustomObject]@{
-        Version      = $VersionLTR
-        Architecture = 'x64'
-        Channel      = 'LTR'
-        URI          = $URL64LTR
-    }
-}
+New-NevergreenApp -Name 'QGIS' -Version $Version64 -Uri $URL64 -Architecture 'x64' -Channel 'Latest' -Type 'Msi'
+New-NevergreenApp -Name 'QGIS' -Version $Version64LTR -Uri $URL64LTR -Architecture 'x64' -Channel 'LTR' -Type 'Msi'

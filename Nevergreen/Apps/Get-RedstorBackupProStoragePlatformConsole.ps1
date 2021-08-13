@@ -1,11 +1,7 @@
-$DownloadPageURL =  'https://support.redstor.com' + ((Invoke-WebRequest 'https://support.redstor.com/hc/en-gb/sections/200458081-Downloads' -UseBasicParsing).Links | Where-Object href -Like '*Downloads-Redstor-Pro*')[0].href + '#tab2'
-$URL32 = ((Invoke-WebRequest $DownloadPageURL -UseBasicParsing).Links | Where-Object href -Like '*RedstorBackupPro-SP-Console*')[0].href 
-$Version = ($URL32 | Select-String -Pattern 'RedstorBackupPro-SP-Console-((?:\d+\.)+(?:\d+)).exe').Matches.Groups[1].Value
+$DownloadPageURL = Get-Link -Uri 'https://support.redstor.com/hc/en-gb/sections/200458081-Downloads' -MatchProperty href -Pattern 'Downloads-Redstor-Pro' -PrefixDomain
 
-if ($Version -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
+$URL32 = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'RedstorBackupPro-SP-Console'
+
+$Version = $URL32 | Get-Version -Pattern '((?:\d+\.)+\d+)\.exe$'
+
+New-NevergreenApp -Name 'Redstor Backup Pro Storage Platform Console' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Exe'

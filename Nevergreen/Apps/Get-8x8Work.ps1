@@ -1,20 +1,6 @@
-$URL32= ((Invoke-WebRequest 'https://support.8x8.com/cloud-phone-service/voice/work-desktop/download-8x8-work-for-desktop' -UseBasicParsing).Links | Where-Object href -Like '*work-32-msi*.msi')[0].href
-$URL64 = ((Invoke-WebRequest 'https://support.8x8.com/cloud-phone-service/voice/work-desktop/download-8x8-work-for-desktop' -UseBasicParsing).Links | Where-Object href -Like '*work-64-msi*.msi')[0].href
-$Version32 = ($URL32 | Select-String -Pattern 'work-32-msi-v((?:\d+\.)+(?:\d.+)).msi').Matches.Groups[1].Value
-$Version64 = ($URL64 | Select-String -Pattern 'work-64-msi-v((?:\d+\.)+(?:\d.+)).msi').Matches.Groups[1].Value
+$URL32,$URL64 = Get-Link -Uri 'https://support.8x8.com/cloud-phone-service/voice/work-desktop/download-8x8-work-for-desktop' -MatchProperty href -Pattern 'work-32-msi','work-64-msi'
 
-if ($Version32 -and $URL32) {
-    [PSCustomObject]@{
-        Version      = $Version32
-        Architecture = 'x86'
-        URI          = $URL32
-    }
-}
+$Version32,$Version64 = $URL32,$URL64 | Get-Version -Pattern '((?:\d+\.)+\d+(?:-\d+)?)' -ReplaceWithDot
 
-if ($Version64 -and $URL64) {
-    [PSCustomObject]@{
-        Version      = $Version64
-        Architecture = 'x64'
-        URI          = $URL64
-    }
-}
+New-NevergreenApp -Name '8x8 Work' -Version $Version32 -Uri $URL32 -Architecture 'x86' -Type 'Msi'
+New-NevergreenApp -Name '8x8 Work' -Version $Version64 -Uri $URL64 -Architecture 'x64' -Type 'Msi'
