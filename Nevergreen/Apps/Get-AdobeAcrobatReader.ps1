@@ -10,7 +10,7 @@ foreach ($Platform in $Platforms) {
     $SearchCount = 5
 
     do {
-        $ReleaseURL = Get-Link -Uri $ReleaseURL -MatchProperty title -Pattern '^next chapter$' -PrefixParent
+        $ReleaseURL = Get-Link -Uri $ReleaseURL -MatchProperty outerHTML -Pattern '>Next' -PrefixParent
 
         $URL = Get-Link -Uri $ReleaseURL -MatchProperty href -Pattern $Platform.Pattern
         if ($URL) {
