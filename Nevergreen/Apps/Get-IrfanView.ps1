@@ -1,5 +1,4 @@
-try
-{
+try {
     $Version = Get-Version -Uri 'https://www.irfanview.com/main_history.htm' -Pattern 'Version ((?:\d+\.)+\d+)'
 
     $Apps = @(
@@ -71,20 +70,16 @@ try
         @{Name = 'IrfanView Language'; Architecture = 'x86'; Type = 'Zip'; Uri = 'https://www.irfanview.com/languages.htm'; Pattern = 'irfanview_lang_uzbek\.zip$'; Language = 'Uzbek' }
     )
 
-    foreach ($App in $Apps)
-    {
-        try
-        {
+    foreach ($App in $Apps) {
+        try {
             $URL = Get-Link -Uri $App.Uri -MatchProperty href -Pattern $App.Pattern
             New-NevergreenApp -Name $App.Name -Version $Version -Uri $URL -Architecture $App.Architecture -Type $App.Type -Language $App.Language
         }
-        catch
-        {
+        catch {
         }
     }
 
 }
-catch
-{
+catch {
     Write-Error "$($MyInvocation.MyCommand): Error querying 'https://www.irfanview.com/main_history.htm': $($_.Exception.Message)"
 }
