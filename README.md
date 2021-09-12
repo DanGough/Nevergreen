@@ -33,6 +33,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - AutoIt
 - Cisco Webex
   - This is the new Webex app, AKA Webex Teams. Evergreen returns results for the old Webex Meetings app. This may be deprecated if Evergreen is updated to support both.
+- Cisco Webex Access Anywhere
 - Cisco Webex Support Manager
 - Citrix Files
 - Fujifilm Pixel Shift Combiner
@@ -40,6 +41,8 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Fujifilm X Acquire
 - Fujifilm X Raw Studio
 - Fujifilm X Webcam
+- Google Drive
+- Google Earth Pro
 - IGEL Universal Management Suite
 - Jabra Direct
 - Komodo Labs NEWT Professional
@@ -61,6 +64,8 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Mimecast for Outlook
 - Miniconda
 - nmap
+- Notepad3
+- Opera
 - Philippe Jounin Tftpd64
 - Plantronics Hub
 - Python
@@ -74,6 +79,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - TMurgent AppVDefConGroups
 - TMurgent AppVManage
 - TMurgent AppVManifestEditor
+- TMurgent PsfTooling
 - TMurgent PullApps
 - TMurgent TMEdit
 - TMurgent TMEditX
