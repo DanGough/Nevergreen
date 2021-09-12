@@ -44,7 +44,7 @@ function Get-Link {
         [Parameter(
             Mandatory = $true,
             Position = 1)]
-        [ValidateSet('href', 'OuterHTML', 'class', 'title', 'data-filename')]
+        [ValidateSet('href', 'outerHTML', 'innerHTML', 'outerText', 'innerText', 'class', 'title', 'tagName', 'data-filename')]
         [String] $MatchProperty,
         [Parameter(
             Mandatory = $true,
