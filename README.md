@@ -49,7 +49,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Komodo Labs Slitheris
 - Lenovo Commercial Vantage
 - LibreOffice / LibreOfficeHelp
-  - Evergreen implementation uses update API which does not return the latest, also does not include offline help packages.
+  - Evergreen implementation uses update API which does not return the latest versions currently.
 - Logitech Camera Setings
 - Master Packager
 - Microsoft Azure CLI
