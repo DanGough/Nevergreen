@@ -35,6 +35,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Cisco Webex Support Manager
 - Citrix Files
 - Eclipse Temeru Runtime (AKA AdoptOpenJDK Hotspot)
+- FileOpen Plugin
 - Fujifilm Pixel Shift Combiner
 - Fujifilm Raw File Converter EX
 - Fujifilm X Acquire
@@ -67,6 +68,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Miniconda
 - nmap
 - Notepad3
+- Npcap
 - Opera
 - Philippe Jounin Tftpd64
 - Plantronics Hub

@@ -20,8 +20,14 @@ function Get-Version {
     .PARAMETER Uri
         The Uri to load web content from to process.
 
+    .PARAMETER UserAgent
+        Optional parameter to provide a user agent for Invoke-WebRequest to use. Examples are:
+
+        Googlebot: 'Googlebot/2.1 (+http://www.google.com/bot.html)'
+        Microsoft Edge: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246'
+
     .PARAMETER Pattern
-        Optional RegEx pattern to use for version matching.
+        Optional RegEx pattern to use for version matching. Pattern to return must be included in parentheses.
 
     .PARAMETER ReplaceWithDot
         Switch to automatically replace characters - or _ with . in detected version.
@@ -45,7 +51,11 @@ function Get-Version {
             Mandatory = $true,
             ParameterSetName = 'Uri')]
         [ValidatePattern('^(http|https)://')]
-        [String[]] $Uri,
+        [String] $Uri,
+        [Parameter(
+            Mandatory = $false,
+            ParameterSetName = 'Uri')]
+        [String] $UserAgent,
         [Parameter(
             Mandatory = $false,
             Position = 1)]
@@ -55,22 +65,35 @@ function Get-Version {
     )
 
     begin {
+
+    }
+
+    process {
+
         if ($PsCmdlet.ParameterSetName -eq 'Uri') {
 
             $ProgressPreference = 'SilentlyContinue'
 
-            foreach ($CurrentUri in $Uri) {
-                try {
-                    $String += (Invoke-WebRequest -Uri $CurrentUri -DisableKeepAlive -UseBasicParsing).Content
+            try {
+                $ParamHash = @{
+                    Uri              = $Uri
+                    Method           = 'GET'
+                    UseBasicParsing  = $True
+                    DisableKeepAlive = $True
+                    ErrorAction      = 'Stop'
                 }
-                catch {
-                    Write-Error "Unable to query URL '$CurrentUri': $($_.Exception.Message)"
-                }
-            }
-        }
-    }
 
-    process {
+                if ($UserAgent) {
+                    $ParamHash.UserAgent = $UserAgent
+                }
+
+                $String = (Invoke-WebRequest @ParamHash).Content
+            }
+            catch {
+                Write-Error "Unable to query URL '$Uri': $($_.Exception.Message)"
+            }
+
+        }
 
         foreach ($CurrentString in $String) {
 
