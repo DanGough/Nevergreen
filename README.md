@@ -48,6 +48,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Komodo Labs NEWT Professional
 - Komodo Labs Slitheris
 - Lenovo Commercial Vantage
+- LibreOffice
 - Logitech Camera Setings
 - Master Packager
 - Microsoft Azure CLI
