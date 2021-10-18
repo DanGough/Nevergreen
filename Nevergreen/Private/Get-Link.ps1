@@ -23,8 +23,14 @@ function Get-Link {
     .PARAMETER Pattern
         The RegEx pattern to apply to the selected property. Supply an array of patterns to receive multiple links.
 
-    .PARAMETER MatchProperty
+    .PARAMETER ReturnProperty
         Optional. Specifies which property to return from the link. Defaults to href, but 'data-filename' can also be useful to retrieve.
+
+    .PARAMETER UserAgent
+        Optional parameter to provide a user agent for Invoke-WebRequest to use. Examples are:
+
+        Googlebot: 'Googlebot/2.1 (+http://www.google.com/bot.html)'
+        Microsoft Edge: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246'
 
     .EXAMPLE
         Get-Link -Uri 'http://somewhere.com' -MatchProperty href -Pattern '\.exe$'
@@ -56,26 +62,48 @@ function Get-Link {
             Position = 3)]
         [ValidateNotNullOrEmpty()]
         [String] $ReturnProperty = 'href',
+        [Parameter(
+            Mandatory = $false)]
+        [String] $UserAgent,
         [Switch] $PrefixDomain,
         [Switch] $PrefixParent
     )
 
     $ProgressPreference = 'SilentlyContinue'
-    $Response = Invoke-WebRequest -Uri $Uri -DisableKeepAlive -UseBasicParsing
 
-    foreach ($CurrentPattern in $Pattern) {
-        $Link = $Response.Links | Where-Object $MatchProperty -match $CurrentPattern | Select-Object -First 1 -ExpandProperty $ReturnProperty
-
-        if ($PrefixDomain) {
-            $BaseURL = ($Uri -split '/' | Select-Object -First 3) -join '/'
-            $Link = Set-UriPrefix -Uri $Link -Prefix $BaseURL
-        }
-        elseif ($PrefixParent) {
-            $BaseURL = ($Uri -split '/' | Select-Object -SkipLast 1) -join '/'
-            $Link = Set-UriPrefix -Uri $Link -Prefix $BaseURL
-        }
-
-        $Link
-
+    $ParamHash = @{
+        Uri              = $Uri
+        Method           = 'GET'
+        UseBasicParsing  = $True
+        DisableKeepAlive = $True
+        ErrorAction      = 'Stop'
     }
+
+    if ($UserAgent) {
+        $ParamHash.UserAgent = $UserAgent
+    }
+
+    try {
+        $Response = Invoke-WebRequest @ParamHash
+
+        foreach ($CurrentPattern in $Pattern) {
+            $Link = $Response.Links | Where-Object $MatchProperty -Match $CurrentPattern | Select-Object -First 1 -ExpandProperty $ReturnProperty
+
+            if ($PrefixDomain) {
+                $BaseURL = ($Uri -split '/' | Select-Object -First 3) -join '/'
+                $Link = Set-UriPrefix -Uri $Link -Prefix $BaseURL
+            }
+            elseif ($PrefixParent) {
+                $BaseURL = ($Uri -split '/' | Select-Object -SkipLast 1) -join '/'
+                $Link = Set-UriPrefix -Uri $Link -Prefix $BaseURL
+            }
+
+            $Link
+
+        }
+    }
+    catch {
+        Write-Error "$($MyInvocation.MyCommand): $($_.Exception.Message)"
+    }
+
 }
