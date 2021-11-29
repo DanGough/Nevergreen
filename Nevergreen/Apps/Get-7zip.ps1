@@ -4,7 +4,7 @@ $Apps = @(
     @{Name = '7zip'; Architecture = 'ARM64'; Type = 'Exe'; Pattern = '7z\d{4}\-arm64\.exe' }
     @{Name = '7zip'; Architecture = 'x64'; Type = 'Msi'; Pattern = '7z\d{4}\-x64\.msi' }
     @{Name = '7zip'; Architecture = 'x86'; Type = 'Msi'; Pattern = '7z\d{4}\.msi' }
-    @{Name = '7zip  extra'; Architecture = 'Multi'; Type = '7z'; Pattern = '7z\d{4}-extra\.7z' }
+    @{Name = '7zip extra'; Architecture = 'Multi'; Type = '7z'; Pattern = '7z\d{4}-extra\.7z' }
 )
 
 foreach ($App in $Apps) {
