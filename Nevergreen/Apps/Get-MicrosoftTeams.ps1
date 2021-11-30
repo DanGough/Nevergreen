@@ -3,7 +3,7 @@ $DownloadText = (Invoke-WebRequest -Uri $DownloadURL -DisableKeepAlive -UseBasic
 
 $Rings = @('Canary', 'Teams', 'IT Admins Preview', 'Developers Partners Preview', 'Microsoft Dogfood', 'TAP/Beta Users', 'Public Developer Preview', 'Microsoft Outer Ring', 'Public')
 $Architectures = @('x64', 'x86', 'ARM64')
-$Types = @('Exe', 'Msi', 'Msix')
+$Types = @('Exe', 'Msi')
 
 foreach ($Ring in $Rings)
 {
@@ -12,7 +12,7 @@ foreach ($Ring in $Rings)
         foreach ($Type in $Types)
         {
 
-            $RegEx = "(?:$Ring \(R.+\)) (?:.+\n+)+((?:\d+\.)+\d+).+win-$Architecture.+(http.+\.$Type)"
+            $RegEx = "(?:$Ring \(R.+\)) (?:.+\n)+((?:\d+\.)+\d+).+win-$Architecture.+(http.+\.$Type)"
 
             if ($DownloadText -match $RegEx)
             {
