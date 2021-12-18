@@ -27,7 +27,7 @@ function New-NevergreenApp {
         Mandatory. Must match x86, x64, ARM32, ARM64 or Multi.
 
     .PARAMETER Type
-        Mandatory. Must match Msi, Msp, Exe, Zip, MSIX, AppX, AppV if supplied.
+        Mandatory. Must match Msi, Msp, Exe, Zip, Msix, AppX, AppV, 7z if supplied.
 
     .PARAMETER Language
         Optional. The language of the application installer, e.g. 'en'.
@@ -74,7 +74,7 @@ function New-NevergreenApp {
         [String] $Architecture,
         [Parameter(
             Mandatory = $true)]
-        [ValidateSet('Msi', 'Msp', 'Exe', 'Zip', 'MSIX', 'AppX', 'AppV')]
+        [ValidateSet('Msi', 'Msp', 'Exe', 'Zip', 'Msix', 'AppX', 'AppV', '7z')]
         [String] $Type,
         [Parameter(
             Mandatory = $false)]
