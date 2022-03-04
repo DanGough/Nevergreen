@@ -9,7 +9,7 @@ foreach ($Ring in $Rings) {
     foreach ($Architecture in $Architectures) {
         foreach ($Type in $Types) {
 
-            $RegEx = "$Ring(?:.+\n)+((?:\d+\.)+\d+).+win-$Architecture.+(http.+\.$Type)"
+            $RegEx = "$Ring (?:.+\n)+((?:\d+\.)+\d+).+win-$Architecture.+(http.+\.$Type)"
 
             if ($DownloadText -match $RegEx) {
                 New-NevergreenApp -Name 'Microsoft Teams' -Version $matches[1] -Uri $matches[2] -Architecture $Architecture -Type $Type -Ring $Ring
