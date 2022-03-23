@@ -2,10 +2,10 @@ try {
     $Version = Get-Version -Uri 'https://www.irfanview.com/main_history.htm' -Pattern 'Version ((?:\d+\.)+\d+)'
 
     $Apps = @(
-        @{Name = 'IrfanView'; Architecture = 'x86'; Type = 'Exe'; Uri = 'https://www.fosshub.com/IrfanView.html'; Pattern = 'iview\d+_setup\.exe$'; Language = 'en' }
-        @{Name = 'IrfanView'; Architecture = 'x64'; Type = 'Exe'; Uri = 'https://www.fosshub.com/IrfanView.html'; Pattern = 'iview\d+_x64_setup\.exe$'; Language = 'en' }
-        @{Name = 'IrfanView Plugins'; Architecture = 'x86'; Type = 'Exe'; Uri = 'https://www.fosshub.com/IrfanView.html'; Pattern = 'iview\d+_plugins_setup\.exe$'; Language = 'en' }
-        @{Name = 'IrfanView Plugins'; Architecture = 'x64'; Type = 'Exe'; Uri = 'https://www.fosshub.com/IrfanView.html'; Pattern = 'iview\d+_plugins_x64_setup\.exe$'; Language = 'en' }
+        @{Name = 'IrfanView'; Architecture = 'x86'; Type = 'Exe'; Uri = 'https://fileforum.com/download/IrfanView/967963863/1'; Pattern = 'iview\d+_setup\.exe$'; Language = 'en' }
+        @{Name = 'IrfanView'; Architecture = 'x64'; Type = 'Exe'; Uri = 'https://fileforum.com/download/IrfanView/967963863/1?64bit=1'; Pattern = 'iview\d+_x64_setup\.exe$'; Language = 'en' }
+        @{Name = 'IrfanView Plugins'; Architecture = 'x86'; Type = 'Exe'; Uri = 'https://fileforum.com/download/IrfanView-PlugIns/1099412658/1'; Pattern = 'iview\d+_plugins_setup\.exe$'; Language = 'en' }
+        @{Name = 'IrfanView Plugins'; Architecture = 'x64'; Type = 'Exe'; Uri = 'https://fileforum.com/download/IrfanView-PlugIns/1099412658/1?64bit=1'; Pattern = 'iview\d+_plugins_x64_setup\.exe$'; Language = 'en' }
         @{Name = 'IrfanView Language'; Architecture = 'x86'; Type = 'Exe'; Uri = 'https://www.irfanview.com/languages.htm'; Pattern = 'irfanview_lang_deutsch\.exe$'; Language = 'de' }
         @{Name = 'IrfanView Language'; Architecture = 'x86'; Type = 'Zip'; Uri = 'https://www.irfanview.com/languages.htm'; Pattern = 'irfanview_lang_deutsch\.zip$'; Language = 'de' }
         @{Name = 'IrfanView Language'; Architecture = 'x86'; Type = 'Exe'; Uri = 'https://www.irfanview.com/languages.htm'; Pattern = 'irfanview_lang_russian\.exe$'; Language = 'ru' }
