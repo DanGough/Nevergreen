@@ -1,6 +1,6 @@
 $Apps = @(
+    @{Architecture = 'x64'; Type = 'EXE'; Pattern = '\.exe$' }
     @{Architecture = 'x64'; Type = 'MSI'; Pattern = '64\.msi$' }
-    @{Architecture = 'x86'; Type = 'MSI'; Pattern = '(?<!64)\.msi$' }
 )
 
 foreach ($App in $Apps) {
