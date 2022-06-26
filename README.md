@@ -16,6 +16,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 ## Supported apps
 <br>
 
+- 7-Zip (Evergreen URLs return HTML files at present and version is not the latest)
 - 8x8 Work
 - Adobe/Harman AIR
 - Adobe Creative Cloud
@@ -34,6 +35,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Cisco Webex Access Anywhere
 - Cisco Webex Support Manager
 - Citrix Files
+- Druide Antidote
 - Eclipse Temeru Runtime (AKA AdoptOpenJDK Hotspot)
 - FileOpen Plugin
 - Fujifilm Pixel Shift Combiner
@@ -52,6 +54,8 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - LibreOffice / LibreOfficeHelp
   - Evergreen implementation uses update API which does not return the latest versions currently.
 - Logitech Camera Setings
+- LSoft Active Disk Image Lite
+- LSoft Active Boot Disk
 - Master Packager
 - Microsoft Azure CLI
 - Microsoft Azure Information Protection UL Client
@@ -71,7 +75,6 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Npcap
 - Opera
 - Philippe Jounin Tftpd64
-- Plantronics Hub
 - Python
 - QGIS
 - Radio Detection CAT Manager
