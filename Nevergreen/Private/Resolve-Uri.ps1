@@ -42,7 +42,8 @@ function Resolve-Uri {
         [Parameter(
             Mandatory = $false,
             Position = 1)]
-        [String] $UserAgent
+        [String] $UserAgent,
+        [System.Collections.Hashtable] $Headers
     )
 
     begin {
@@ -65,6 +66,10 @@ function Resolve-Uri {
 
                 if ($UserAgent) {
                     $ParamHash.UserAgent = $UserAgent
+                }
+
+                if ($Headers) {
+                    $ParamHash.Headers = $Headers
                 }
 
                 $Response = Invoke-WebRequest @ParamHash
