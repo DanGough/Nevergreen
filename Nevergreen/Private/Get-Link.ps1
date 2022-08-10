@@ -65,6 +65,7 @@ function Get-Link {
         [Parameter(
             Mandatory = $false)]
         [String] $UserAgent,
+        [System.Collections.Hashtable] $Headers,
         [Switch] $PrefixDomain,
         [Switch] $PrefixParent
     )
@@ -81,6 +82,10 @@ function Get-Link {
 
     if ($UserAgent) {
         $ParamHash.UserAgent = $UserAgent
+    }
+
+    if ($Headers) {
+        $ParamHash.Headers = $Headers
     }
 
     try {
