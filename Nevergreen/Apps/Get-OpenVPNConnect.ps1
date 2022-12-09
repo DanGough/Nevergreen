@@ -1,6 +1,11 @@
-$version = Get-Version -Uri 'https://openvpn.net/client-connect-vpn-for-windows/' -Pattern 'Release notes for ((?:\d+\.)+\d+)'
+$Version = Get-Version -Uri 'https://openvpn.net/client-connect-vpn-for-windows/' -Pattern 'Release notes for ((?:\d+\.)+\d+)'
 
-$URL32,$URL64 = Get-Link -Uri 'https://openvpn.net/client-connect-vpn-for-windows/' -MatchProperty href -Pattern 'windows-x86.msi','windows.msi'
+$Releases = @(
+    @{Architecture = 'x86'; Type = 'Msi'; Pattern = 'x86\.msi$'}
+    @{Architecture = 'x64'; Type = 'Msi'; Pattern = 'windows\.msi$'}
+)
 
-New-NevergreenApp -Name 'OpenVPNConnect' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Msi'
-New-NevergreenApp -Name 'OpenVPNConnect' -Version $Version -Uri $URL64 -Architecture 'x64' -Type 'Msi'
+foreach ($Release in $Releases) {
+        $URL = Get-Link -Uri 'https://openvpn.net/client-connect-vpn-for-windows/' -MatchProperty href -Pattern $Release.Pattern
+        New-NevergreenApp -Name 'OpenVPNConnect' -Version $Version -Uri $URL -Architecture $Release.Architecture -Type $Release.Type
+}
