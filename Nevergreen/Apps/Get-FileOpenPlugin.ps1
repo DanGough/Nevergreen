@@ -1,13 +1,13 @@
-$Apps = @(
-    @{Architecture = 'x64'; Type = 'EXE'; Pattern = '\.exe$' }
-    @{Architecture = 'x64'; Type = 'MSI'; Pattern = '64\.msi$' }
+$Releases = @(
+    @{Architecture = 'Multi'; Type = 'exe'; Pattern = '\.exe$' }
+    @{Architecture = 'x64'; Type = 'msi'; Pattern = '64\.msi$' }
 )
 
-foreach ($App in $Apps) {
+foreach ($Release in $Releases) {
     try {
-        $URL = Get-Link -Uri 'https://plugin.fileopen.com/' -MatchProperty href -Pattern $App.Pattern -PrefixDomain
-        $Version = Get-Link -Uri 'https://plugin.fileopen.com/' -MatchProperty href -Pattern $App.Pattern -ReturnProperty outerHTML | Get-Version -Pattern '\[(\d+(?:\.\d+)*)\]'
-        New-NevergreenApp -Name 'FileOpen Plugin' -Version $Version -Uri $URL -Architecture $App.Architecture -Type $App.Type
+        $URL = Get-Link -Uri 'https://plugin.fileopen.com/' -MatchProperty href -Pattern $Release.Pattern -PrefixDomain -ErrorAction Stop
+        $Version = Get-Link -Uri 'https://plugin.fileopen.com/' -MatchProperty href -Pattern $Release.Pattern -ReturnProperty outerHTML -ErrorAction Stop | Get-Version -Pattern '\[(\d+(?:\.\d+)*)\]'
+        New-NevergreenApp -Name 'FileOpen Plugin' -Version $Version -Uri $URL -Architecture $Release.Architecture -Type $Release.Type
     }
     catch {
         Write-Error "$($MyInvocation.MyCommand): $($_.Exception.Message)"
