@@ -2,6 +2,7 @@ $Platforms = @(
     @{Architecture = 'x86'; Language = 'Neutral'; Pattern = 'AcroRdrDCUpd\d{8,12}\.msp'}
     @{Architecture = 'x86'; Language = 'Multi'; Pattern = 'AcroRdrDCUpd\d{8,12}_MUI\.msp'}
     @{Architecture = 'x64'; Language = 'Neutral'; Pattern = 'AcroRdrDCx64Upd\d{8,12}\.msp'}
+    @{Architecture = 'x64'; Language = 'Multi'; Pattern = 'AcroRdrDCx64Upd\d{8,12}_MUI\.msp'}
 )
 
 foreach ($Platform in $Platforms) {
