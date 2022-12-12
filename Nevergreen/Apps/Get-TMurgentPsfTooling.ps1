@@ -1,7 +1,7 @@
 # MSIX links on site out of date
 try {
 
-    $URL = (Get-Link -Uri 'https://www.tmurgent.com/APPV/en/resources/tools-downloads/msix-tools/128-msix-tools/557-psftoolingv48' -MatchProperty href -Pattern '\.msix$' -PrefixDomain | Resolve-Uri).Uri
+    $URL = Get-Link -Uri 'https://www.tmurgent.com/APPV/en/resources/tools-downloads/msix-tools/128-msix-tools/557-psftoolingv48' -MatchProperty href -Pattern '\.msix$' -PrefixDomain -ErrorAction Stop
 
     $Version = $URL | Get-Version
 
