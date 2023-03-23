@@ -1,4 +1,4 @@
-$Version = Get-Version -Uri 'https://openvpn.net/client-connect-vpn-for-windows/' -Pattern 'Release notes for ((?:\d+\.)+\d+)'
+$Version = Get-Version -Uri 'https://openvpn.net/vpn-server-resources/openvpn-connect-for-windows-change-log/' -Pattern 'Release notes for ((?:\d+\.)+\d+)'
 
 $Releases = @(
     @{Architecture = 'x86'; Type = 'Msi'; Pattern = 'x86\.msi$'}
