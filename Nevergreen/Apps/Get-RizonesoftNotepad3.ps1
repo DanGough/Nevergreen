@@ -1,5 +1,5 @@
 $Releases = @(
-    @{Architecture = 'x64'; Type = 'exe'; Pattern = 'Notepad3_((?:\d+\.)+\d+)_Setup\.exe' }
+    @{Architecture = 'x64'; Type = 'exe'; Pattern = 'Notepad3_((?:\d+\.)+\d+)_x64_Setup\.exe' }
     @{Architecture = 'x86'; Type = 'exe'; Pattern = 'Notepad3_((?:\d+\.)+\d+)_x86_Setup\.exe' }
 )
 
