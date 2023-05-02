@@ -1,13 +1,16 @@
-try {
+$SupportedVersions = @('3.10','3.11')
 
-    $URL64 = Get-Link -Uri 'https://www.python.org/downloads/windows/' -MatchProperty href -Pattern 'python-((?:\d+\.)+\d+)-amd64\.exe$'
-    $Version = $URL64 | Get-Version
-    New-NevergreenApp -Name 'Python' -Version $Version -Uri $URL64 -Architecture 'x64' -Type 'Exe'
+$Suffixes = @{x86 = '.exe'; x64 = '-amd64.exe'; ARM64 = '-arm64.exe'}
 
-    $URL32 = Get-Link -Uri 'https://www.python.org/downloads/windows/' -MatchProperty href -Pattern 'python-((?:\d+\.)+\d+)\.exe$'
-    New-NevergreenApp -Name 'Python' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Exe'
+foreach ($SupportedVersion in $SupportedVersions) {
 
-}
-catch {
-    Write-Error "$($MyInvocation.MyCommand): $($_.Exception.Message)"
+    foreach ($Platform in $Suffixes.keys) {
+
+        $URL = Get-Link -Uri 'https://www.python.org/downloads/windows/' -MatchProperty href -Pattern "python-($([RegEx]::Escape($SupportedVersion))\.\d+)$([RegEx]::Escape($Suffixes[$Platform]))$"
+        if ($URL) {
+            $Version = $URL | Get-Version
+            New-NevergreenApp -Name "Python $SupportedVersion" -Version $Version -Uri $URL -Architecture $Platform -Type 'Exe'
+        }
+    }
+
 }

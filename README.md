@@ -26,12 +26,9 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Advanced Installer
 - Advanced IP Scanner
 - Advanced Port Scanner
-- Anaconda
 - Apple iTunes
-- AppVentix
 - AutoIt
 - Cisco Webex
-  - This is the new Webex app, AKA Webex Teams. Evergreen returns results for the old Webex Meetings app. This may be deprecated if Evergreen is updated to support both.
 - Cisco Webex Access Anywhere
 - Cisco Webex Support Manager
 - Citrix Files
@@ -52,11 +49,9 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Komodo Labs Slitheris
 - Lenovo Commercial Vantage
 - LibreOffice / LibreOfficeHelp
-  - Evergreen implementation uses update API which does not return the latest versions currently.
 - Logitech Camera Setings
 - LSoft Active Disk Image Lite
 - LSoft Active Boot Disk
-- Master Packager
 - Microsoft Azure CLI
 - Microsoft Azure Information Protection UL Client
 - Microsoft OpenJDK
@@ -65,24 +60,20 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Microsoft SSMS
   - This is already in Evergreen but has a known issue against it where the feed is providing the build version rather than the release version most know it by.
 - Microsoft Sysinternals tools (all suites and individual tools)
-- Microsoft Teams
-  - This provides all of the beta/dev releases that Evergreen does not.
 - Microsoft Windows ADK
 - Mimecast for Outlook
-- Miniconda
 - nmap
-- Notepad3
 - Npcap
 - Opera
+- OpenVPN Community
+- OpenVPN Connect
 - Philippe Jounin Tftpd64
+- PingIdentity PingID
 - Python
 - QGIS
 - Radio Detection CAT Manager
 - Redstor Backup Pro Storage Platform Console
 - RIA eID
-- Simon Tatham PuTTY
-- Tableau Desktop
-- Tableau Reader
 - TMurgent AppVDefConGroups
 - TMurgent AppVManage
 - TMurgent AppVManifestEditor
@@ -91,8 +82,8 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - TMurgent TMEdit
 - TMurgent TMEditX
 - Zebra Card Studio
-- Zoom
-  - This is already in Evergreen but this implementation returns additional installer types
+- Zoom VDI
+  - This is already in Evergreen but the VDI downloads just return the version as 'Latest'
 
 <br>
 

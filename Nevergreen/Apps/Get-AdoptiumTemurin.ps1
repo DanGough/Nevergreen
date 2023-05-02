@@ -26,8 +26,8 @@ foreach ($MajorVersion in $MajorVersions) {
 
                     $Release | ForEach-Object {
                         $Version = ($_.version.openjdk_version.Replace('_','.').Replace('+','.') -Replace '-[a-z]','.') -Replace '^1\.8\.','8.'
-                        New-NevergreenApp -Name "Eclipse Temeru Runtime $ImageType" -Version $Version -Uri $_.binary.installer.link -Architecture $Architecture -Type 'Msi'
-                        New-NevergreenApp -Name "Eclipse Temeru Runtime $ImageType" -Version $Version -Uri $_.binary.package.link -Architecture $Architecture -Type 'Zip'
+                        New-NevergreenApp -Name "Adoptium Temurin $ImageType" -Version $Version -Uri $_.binary.installer.link -Architecture $Architecture -Type 'Msi'
+                        New-NevergreenApp -Name "Adoptium Temurin $ImageType" -Version $Version -Uri $_.binary.package.link -Architecture $Architecture -Type 'Zip'
                     }
                 }
 
