@@ -1,6 +1,6 @@
 try {
 
-    $Version = Get-Version -Uri 'https://www.citrix.com/downloads/sharefile/clients-and-plug-ins/citrix-files-for-windows.html' -Pattern 'Citrix Files for Windows v((?:\d+\.)+\d+)'
+    $Version = Get-Version -Uri 'https://www.citrix.com/downloads/sharefile/clients-and-plug-ins/citrix-files-for-windows.html' -Pattern 'ShareFile for Windows v((?:\d+\.)+\d+)'
 
     $URLMsi = Get-Link -Uri 'https://www.citrix.com/downloads/sharefile/clients-and-plug-ins/citrix-files-for-windows.html' -MatchProperty outerHTML -Pattern '\.msi' -ReturnProperty outerHTML
     if ($URLMsi -match 'rel="(//.+\.msi[^"]+)') {
