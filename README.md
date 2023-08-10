@@ -26,12 +26,13 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Advanced Installer
 - Advanced IP Scanner
 - Advanced Port Scanner
+- Anaconda
 - Apple iTunes
 - AutoIt
 - Cisco Webex
 - Cisco Webex Access Anywhere
 - Cisco Webex Support Manager
-- Citrix Files
+- Citrix ShareFile
 - Druide Antidote
 - Eclipse Temeru Runtime (AKA AdoptOpenJDK Hotspot)
 - FileOpen Plugin
@@ -62,6 +63,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Microsoft Sysinternals tools (all suites and individual tools)
 - Microsoft Windows ADK
 - Mimecast for Outlook
+- Miniconda
 - nmap
 - Npcap
 - Opera
