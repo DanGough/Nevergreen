@@ -1,40 +1,27 @@
 try {
+    $Response = Invoke-WebRequest -Uri 'https://docs.conda.io/projects/miniconda/en/latest/miniconda-other-installer-links.html' -UseBasicParsing -DisableKeepAlive
 
-    #Get hashes of all releases
-    $FileNames = @{}
-    ((Invoke-Webrequest -Uri 'https://raw.githubusercontent.com/conda/conda-docs/master/docs/source/miniconda_hashes.rst' -DisableKeepAlive -UseBasicParsing).Content |
-    Select-String -Pattern '(Miniconda\S+\.exe).+(\w{64})' -AllMatches).Matches | ForEach-Object {
-        $FileNames.Add($_.Groups[2].Value, $_.Groups[1].Value)
-    }
+    $URIs = $Response.Links.href | Where-Object {$_ -like '*.exe'}
 
-    #Get all links from main download page, swap URLs with 'latest' in filename for the proper versioned name via hash matching and extract properties from filename
-    ((Invoke-Webrequest -Uri 'https://raw.githubusercontent.com/conda/conda-docs/master/docs/source/miniconda.rst' -DisableKeepAlive -UseBasicParsing).Content |
-    Select-String -Pattern '(http\S+(Miniconda\d)-\S+-Windows-(x86(?:_64)?)\.exe).+(\w{64})' -AllMatches).Matches | ForEach-Object {
+    foreach ($URI in $URIs) {
+        if ($Response.Content -match "$URI[\s\S]+?(\w{64})") {
+            $Hash = $matches[1]
+        }
+        else {
+            $Hash = $null
+        }
 
-        $URL = $_.Groups[1].Value
-        $Name = $_.Groups[2].Value
-
-        $Architecture = $_.Groups[3].Value
-        if ($Architecture -eq 'x86_64') {
+        if ($URI -like '*86.exe') {
+            $Architecture = 'x86'
+        }
+        else {
             $Architecture = 'x64'
         }
 
-        $Hash = $_.Groups[4].Value
+        $Version = Get-Version -String $URI.Replace('-','.')
+        $Platform = $URI -replace '.+py(\d)(\d+).+','Python $1.$2'
 
-        if ($URL -match 'latest' -and $Hash -in $FileNames.Keys) {
-            $URL = $URL -replace '[^/]+$',$FileNames[$Hash]
-        }
-
-        $Version = $URL | Get-Version
-
-        if ($URL -match 'py(\d+)') {
-            $Channel = "Python $($matches[1].Insert(1,'.'))"
-        }
-
-        if (Resolve-Uri $URL) {
-            New-NevergreenApp -Name $Name -Channel $Channel -Architecture $Architecture -Type 'Exe' -Version $Version -Uri $URL -SHA256 $Hash
-        }
-
+        New-NeverGreenApp -Name 'Miniconda' -Platform $Platform -Uri $URI -Version $Version -Architecture $Architecture -Type 'Exe' -SHA256 $Hash
     }
 }
 catch {
