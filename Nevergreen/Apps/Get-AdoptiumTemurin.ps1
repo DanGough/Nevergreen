@@ -1,4 +1,4 @@
-$MajorVersions = @(8,11,16,17,18,19,20)
+$MajorVersions = @(8,11,16,17,18,19,20,21,22,23,24,25)
 $ImageTypes = @('JDK', 'JRE')
 $Architectures = @('x32','x64')
 
