@@ -35,6 +35,13 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Citrix ShareFile
 - Druide Antidote
 - Eclipse Temeru Runtime (AKA AdoptOpenJDK Hotspot)
+- Elgato 4K Capture Utility
+- Elgato Audio Effects
+- Elgato Camera Hub
+- Elgato Control Center
+- Elgato Game Capture
+- Elgato Stream Deck
+- Elgato Video Capture
 - FileOpen Plugin
 - Fujifilm Pixel Shift Combiner
 - Fujifilm Raw File Converter EX
@@ -122,7 +129,7 @@ If you have a request to add an application to Nevergreen, please abide by the f
 ## Supported Powershell Versions
 <br>
 
-This has been tested with Powershell 5.1 and 7.1.3, and the module manifests lists the minimum supported version as 5.1. It may work on 3.0, but it has never been tested.
+This has been tested with Powershell 5.1 and 7.x, and the module manifests lists the minimum supported version as 5.1. It may work on 3.0, but it has never been tested.
 <br>
 <br>
 
