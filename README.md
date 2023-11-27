@@ -76,6 +76,10 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Opera
 - OpenVPN Community
 - OpenVPN Connect
+- PatchMyPC Publisher
+- PatchMyPC Advanced Insights
+- PatchMyPC Return On Investment Tool
+- PatchMyPC MEM Patching Optimizer
 - Philippe Jounin Tftpd64
 - PingIdentity PingID
 - Python
