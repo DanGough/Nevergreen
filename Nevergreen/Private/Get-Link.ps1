@@ -18,7 +18,7 @@ function Get-Link {
         The URI to query.
 
     .PARAMETER MatchProperty
-        Whether the RegEx pattern should be applied to the href, outerHTML, class, title or data-filename of the link.
+        Which property the RegEx pattern should be applied to, e.g. href, outerHTML, class, title.
 
     .PARAMETER Pattern
         The RegEx pattern to apply to the selected property. Supply an array of patterns to receive multiple links.
@@ -50,7 +50,8 @@ function Get-Link {
         [Parameter(
             Mandatory = $true,
             Position = 1)]
-        [ValidateSet('href', 'outerHTML', 'innerHTML', 'outerText', 'innerText', 'class', 'title', 'tagName', 'data-filename')]
+        [ValidateNotNullOrEmpty()]
+        #[ValidateSet('href', 'outerHTML', 'innerHTML', 'outerText', 'innerText', 'class', 'title', 'tagName', 'data-filename')]
         [String] $MatchProperty,
         [Parameter(
             Mandatory = $true,
