@@ -1,4 +1,4 @@
-$DownloadPageURL = Get-Link -Uri 'https://support.redstor.com/hc/en-gb/sections/200458081-Downloads' -MatchProperty href -Pattern 'Downloads-Redstor-Pro' -PrefixDomain
+$DownloadPageURL = Get-Link -Uri 'https://support.redstor.com/hc/en-gb/sections/200458081-Downloads' -MatchProperty href -Pattern 'Downloads-Redstor-Pro' -PrefixDomain -UserAgent 'Googlebot/2.1 (+http://www.google.com/bot.html)'
 
 $URL32 = Get-Link -Uri $DownloadPageURL -MatchProperty href -Pattern 'RedstorBackupPro-SP-Console'
 
