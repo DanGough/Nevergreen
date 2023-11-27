@@ -96,14 +96,11 @@ function Get-Version {
         }
 
         foreach ($CurrentString in $String) {
-
+            if ($ReplaceWithDot) {
+                $CurrentString = $CurrentString.Replace('-','.').Replace('+','.').Replace('_','.')
+            }
             if ($CurrentString -match $Pattern) {
-                if ($ReplaceWithDot) {
-                    $matches[1].Replace('-','.').Replace('_','.')
-                }
-                else {
-                    $matches[1]
-                }
+                $matches[1]
             }
             else {
                 Write-Warning "No version found within $CurrentString using pattern $Pattern"
