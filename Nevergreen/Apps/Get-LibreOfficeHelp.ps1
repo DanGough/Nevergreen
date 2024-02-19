@@ -1,4 +1,4 @@
-$Branches = @('Fresh','Still')
+$Branches = @('Latest','Previous')
 $Architectures = @('x86_64','x86')
 $Languages = (Invoke-WebRequest -Uri 'https://www.libreoffice.org/download/download/?lang=pick' -DisableKeepAlive).Links | Where-Object href -Match 'lang=' | Select-Object -ExpandProperty href | ForEach-Object { $_ -replace '.+lang=(.+)','$1' } | Sort-Object
 

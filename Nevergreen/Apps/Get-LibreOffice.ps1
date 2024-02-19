@@ -1,4 +1,4 @@
-$Branches = @('Fresh','Still')
+$Branches = @('Latest','Previous')
 $Architectures = @('x86_64','x86')
 $Language = 'en-GB'
 
