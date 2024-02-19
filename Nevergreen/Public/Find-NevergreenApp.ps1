@@ -47,7 +47,7 @@ function Find-NevergreenApp {
 
     begin {
         $AppDir = [System.IO.Path]::Combine((Split-Path -Path $PSScriptRoot -Parent), 'Apps')
-        $Apps = (Get-ChildItem -Path $AppDir).BaseName | ForEach-Object { $_.Split('-')[1] }
+        $Apps = (Get-ChildItem -Path $AppDir).BaseName -replace '^Get-'
         $Results = @()
     }
 
