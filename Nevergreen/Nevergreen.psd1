@@ -8,7 +8,7 @@
 RootModule = 'Nevergreen.psm1'
 
 # Version number of this module.
-ModuleVersion = '2311.2'
+ModuleVersion = '2402.1'
 
 # Supported PSEditions
 CompatiblePSEditions = @('Desktop', 'Core')
