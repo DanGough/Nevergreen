@@ -12,7 +12,7 @@ ForEach($Release in $Releases) {
       $Version = Get-Version -Uri 'https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist' -Pattern '<code>((?:\d+\.)+\d+)<\/code>'
       New-NevergreenApp -Name 'Visual C++ 2015-2022 Redistributable' -Version $Version -Uri $URL -Architecture $Release.Architecture -Type $Release.Type
     }
-    ElseIf($Release.VSVersion -eq 'vs2013) {
+    ElseIf($Release.VSVersion -eq 'vs2013') {
       $Version = Get-Version -Uri 'https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist' -Pattern '(12\.(?:\d+\.)+\d+)'
       New-NevergreenApp -Name 'Visual C++ 2013 Redistributable' -Version $Version -Uri $URL -Architecture $Release.Architecture -Type $Release.Type
     }
