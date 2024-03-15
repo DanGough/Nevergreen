@@ -73,6 +73,7 @@ Evergreen relies on API queries to obtain its data, and HTML scraping is not wel
 - Miniconda
 - nmap
 - Npcap
+- Office Deployment Tool
 - Opera
 - OpenVPN Community
 - OpenVPN Connect
