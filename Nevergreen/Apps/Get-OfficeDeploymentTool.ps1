@@ -1,7 +1,8 @@
-# get Office Deployment Tool details by using the JSON-Object of the
+# Get Office Deployment Tool details by using the JSON-Object of the
 # Javascript to get the download details.
 $DownloadPageUri = 'https://www.microsoft.com/en-us/download/details.aspx?id=49117'
-# Pattern to get the JSON-Object by matching the script start block + variable declaration to the script end block
+# Pattern to get the JSON-Object by matching the
+# script start block + variable declaration to the script end block.
 $JSONBlobPattern = '(?<scriptStart><script>[\w.]+__DLCDetails__=).*?(?<JSObject-scriptStart></script>)'
 
 $Data = Invoke-WebRequest -Uri $DownloadPageUri `
