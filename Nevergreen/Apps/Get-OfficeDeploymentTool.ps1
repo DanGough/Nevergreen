@@ -17,5 +17,5 @@ New-NeverGreenApp `
     -Name 'Office Deployment Tool' `
     -Uri $Data.dlcDetailsView.downloadFile.url `
     -Version $Data.dlcDetailsView.downloadFile.Version `
-    -Architecture 'x64' `
+    -Architecture 'Multi' `
     -Type 'Exe'
