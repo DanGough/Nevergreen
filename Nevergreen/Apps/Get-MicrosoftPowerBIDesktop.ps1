@@ -1,6 +1,24 @@
-$Version = Get-Version -Uri 'https://www.microsoft.com/download/details.aspx?id=58494' -Pattern 'Version:<.+?>((?:\d+\.)+\d+)'
-$URL32 = Get-Link -Uri 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=58494' -MatchProperty href -Pattern 'PBIDesktopSetup\.exe$'
-$URL64 = Get-Link -Uri 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=58494' -MatchProperty href -Pattern 'PBIDesktopSetup_x64\.exe$'
+$DownloadPageUri = 'https://www.microsoft.com/download/details.aspx?id=58494'
+$JSONBlobPattern = '(?<scriptStart><script>[\w.]+__DLCDetails__=).*?(?<JSObject-scriptStart></script>)'
 
-New-NevergreenApp -Name 'Microsoft Power BI Desktop' -Version $Version -Uri $URL32 -Architecture 'x86' -Type 'Exe'
-New-NevergreenApp -Name 'Microsoft Power BI Desktop' -Version $Version -Uri $URL64 -Architecture 'x64' -Type 'Exe'
+$Data = Invoke-WebRequest -Uri $DownloadPageUri `
+    | Select-Object -Property 'Content' `
+    | Select-String -Pattern $JSONBlobPattern `
+    | Select-Object -ExpandProperty 'Matches' `
+    | ForEach-Object {$_.Groups['JSObject'].Value} `
+    | Select-Object -First 1 `
+    | ConvertFrom-JSON
+
+$Data.dlcDetailsView.downloadFile `
+    | ForEach-Object {
+            $Arch = 'x86'
+            if ($_.name.EndsWith('x64.exe')) {
+                $Arch = 'x64'
+            }
+            New-NeverGreenApp `
+                -Name 'Microsoft Power BI Desktop' `
+                -Version ([Version]$_.version) `
+                -Uri $_.url `
+                -Architecture $Arch `
+                -Type 'Exe'
+        }
